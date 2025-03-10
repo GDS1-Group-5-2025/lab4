@@ -33,4 +33,11 @@ public class PlayerMovement : MonoBehaviour
         // Preserving x-component in case rb x-location is not frozen
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * speed);
     }
+
+    // Not used yet but can be called from options menu in future
+    public void SetMovementKeys(KeyCode newUpKey, KeyCode newDownKey)
+    {
+        upKey = newUpKey;
+        downKey = newDownKey;
+    }
 }
