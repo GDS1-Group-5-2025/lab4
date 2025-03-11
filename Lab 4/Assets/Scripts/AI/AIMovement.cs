@@ -10,12 +10,15 @@ public class AIMovement : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
-        destY = float.NaN;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(float.IsNaN(destY)){ Debug.Log("True"); }
+        if(Mathf.Abs(this.transform.position.y - destY) <= 0.05f){
+            this.transform.position = new Vector2(startPos.x, destY);
+            destY = Random.Range(lowerBound, upperBound);
+        }
+        this.transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(startPos.x, destY), speed*Time.deltaTime);
     }
 }
