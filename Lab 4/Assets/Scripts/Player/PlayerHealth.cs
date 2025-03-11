@@ -3,8 +3,11 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int startingLives = 2;
+    [SerializeField] private Vector2 startingPosition;
+
     private int currentLives;
 
+    
     private Collider2D _collider;
     private PlayerMovement _playerMovement;
     // private PlayerShooting _playerShooting;
@@ -19,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         currentLives = startingLives;
+        startingPosition = transform.position;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -37,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
         // Example: If the player still has 1 life left, remove the player's hat
         if (currentLives == 1)
         {
+            Debug.Log("Player has lost a life");
             // Remove the player's hat here
         }
 
@@ -68,6 +73,11 @@ public class PlayerHealth : MonoBehaviour
 
     private void Respawn()
     {
+        Debug.Log("Player has respawned");
+
+        // Reset position
+        transform.position = startingPosition;
+
         // Reset lives
         currentLives = startingLives;
 
