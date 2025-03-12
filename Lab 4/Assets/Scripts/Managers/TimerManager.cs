@@ -8,12 +8,16 @@ public class TimerManager : MonoBehaviour
   
     void Update()
     {
-        timer -= Time.deltaTime;
-        timerText.text = Mathf.FloorToInt(timer).ToString();
-
-        if (timer <= 0f)
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = Mathf.CeilToInt(timer).ToString();
+        }
+        else 
         {
             ScoreManager.Instance.CheckWhoHasMostPoints();
         }
+
+
     }
 }
