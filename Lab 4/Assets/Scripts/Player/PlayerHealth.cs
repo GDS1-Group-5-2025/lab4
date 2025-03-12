@@ -35,12 +35,12 @@ public class PlayerHealth : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             TakeDamage(1);
+            collision.gameObject.SetActive(false);
         }
     }
 
     private void TakeDamage(int damage)
     {
-        _bulletManager.ClearBullets();
         _currentLives -= damage;
 
         switch (_currentLives)
@@ -50,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
                 // Remove the player's hat here
                 break;
             case <= 0:
+                _bulletManager.ClearBullets();
                 PlayerDeath();
                 Debug.Log("Player has died");
                 break;
