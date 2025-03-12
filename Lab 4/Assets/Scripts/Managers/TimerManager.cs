@@ -3,15 +3,15 @@ using TMPro;
 
 public class TimerManager : MonoBehaviour
 {
-    public float timer = 0f;
+    public float timer = 99f;
     public TextMeshProUGUI timerText;
   
     void Update()
     {
-        timer += Time.deltaTime;
+        timer -= Time.deltaTime;
         timerText.text = Mathf.FloorToInt(timer).ToString();
 
-        if (timer >= 99f)
+        if (timer <= 0f)
         {
             ScoreManager.Instance.CheckWhoHasMostPoints();
         }
