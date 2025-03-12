@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
     [SerializeField] private Vector2 startingPosition;
 
@@ -10,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     
     private Collider2D _collider;
     private PlayerMovement _playerMovement;
+
     // private PlayerShooting _playerShooting;
 
     private void Awake()
@@ -38,7 +40,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentLives -= damage;
 
-        // Example: If the player still has 1 life left, remove the player's hat
         if (currentLives == 1)
         {
             Debug.Log("Player has lost a life");
@@ -54,6 +55,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void PlayerDeath()
     {
+        //Change Score
+        ScoreManager.Instance.IncrementScoreForOppositionOf(playerNumber);
+
+
         // Disable movement
         if (_playerMovement != null)
             _playerMovement.enabled = false;
