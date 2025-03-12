@@ -1,30 +1,32 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
-    [SerializeField] private Vector2 startingPosition;
+    [SerializeField] private GameObject weapon;
 
-    private int currentLives;
+    private int _currentLives;
 
-    
     private Collider2D _collider;
     private PlayerMovement _playerMovement;
-
-    // private PlayerShooting _playerShooting;
+    private BulletManager _bulletManager;
+    private Vector3 _startingPosition;
+    private Quaternion _startingRotation;
 
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
         _playerMovement = GetComponent<PlayerMovement>();
-        // _playerShooting = GetComponent<PlayerShooting>();
+        _bulletManager = FindFirstObjectByType<BulletManager>();
     }
 
     private void Start()
     {
-        currentLives = startingLives;
-        startingPosition = transform.position;
+        _currentLives = startingLives;
+        _startingPosition = transform.position;
+        _startingRotation = transform.rotation;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,19 +40,21 @@ public class PlayerHealth : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        currentLives -= damage;
+        _bulletManager.ClearBullets();
+        _currentLives -= damage;
 
-        if (currentLives == 1)
+        switch (_currentLives)
         {
-            Debug.Log("Player has lost a life");
-            // Remove the player's hat here
+            case 1:
+                Debug.Log("Player has lost a life");
+                // Remove the player's hat here
+                break;
+            case <= 0:
+                PlayerDeath();
+                Debug.Log("Player has died");
+                break;
         }
 
-        if (currentLives <= 0)
-        {
-            PlayerDeath();
-            Debug.Log("Player has died");
-        }
     }
 
     private void PlayerDeath()
@@ -60,12 +64,13 @@ public class PlayerHealth : MonoBehaviour
 
 
         // Disable movement
-        if (_playerMovement != null)
+        if (_playerMovement )
             _playerMovement.enabled = false;
 
-        // Disable shooting
-        // if (_playerShooting != null)
-        //     _playerShooting.enabled = false;
+        // Disable shooting and aiming
+        if (weapon)
+            weapon.SetActive(false);
+        _bulletManager.shootingEnabled = false;
 
         // Disable the collider
         _collider.enabled = false;
@@ -81,18 +86,20 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player has respawned");
 
         // Reset position
-        transform.position = startingPosition;
+        transform.position = _startingPosition;
+        transform.rotation = _startingRotation;
 
         // Reset lives
-        currentLives = startingLives;
+        _currentLives = startingLives;
 
         // Re-enable movement
-        if (_playerMovement != null)
+        if (_playerMovement )
             _playerMovement.enabled = true;
 
         // Re-enable shooting
-        // if (_playerShooting != null)
-        //     _playerShooting.enabled = true;
+        if (weapon)
+            weapon.SetActive(true);
+        _bulletManager.shootingEnabled = true;
 
         // Re-enable the collider
         _collider.enabled = true;
