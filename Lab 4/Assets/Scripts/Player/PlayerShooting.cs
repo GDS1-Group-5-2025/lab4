@@ -3,14 +3,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject bulletPrefab;
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
+    private BulletManager _bulletManager;
 
-    void Start()
+    private void Start()
     {
 
+        _bulletManager = FindFirstObjectByType<BulletManager>();
         _playerInput = GetComponentInParent<PlayerInput>();
 
         // Get current player input action map
@@ -21,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (ctx.action.actionMap == _playerActionMap && ctx.performed)
         {
-            Instantiate(bulletPrefab, transform.position + transform.up * 1f, transform.rotation);
+            _bulletManager.Shoot(transform.position + transform.up * 1f, transform.rotation);
         }
     }
 }
