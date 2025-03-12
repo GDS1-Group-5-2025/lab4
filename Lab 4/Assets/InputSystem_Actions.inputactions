@@ -70,7 +70,7 @@
                 {
                     "name": "",
                     "id": "29c0ac0c-28aa-4051-993d-7aafe9c86e88",
-                    "path": "<Keyboard>/rightShift",
+                    "path": "<Keyboard>/slash",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -182,7 +182,7 @@
                 {
                     "name": "",
                     "id": "b3c1c7f0-bd20-4ee7-a0f1-899b24bca6d7",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
