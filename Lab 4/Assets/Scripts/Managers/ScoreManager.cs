@@ -58,7 +58,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     //Called when time runs out
-    private void CheckWhoHasMostPoints()
+    public void CheckWhoHasMostPoints()
     {
         if (player1Score > player2Score)
         {
