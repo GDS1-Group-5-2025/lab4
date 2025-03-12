@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        // If there is already an instance and it’s not this one, destroy this duplicate.
+        // If there is already an instance and itï¿½s not this one, destroy this duplicate.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -55,6 +55,23 @@ public class ScoreManager : MonoBehaviour
             winningPlayer = 2;
             EndGame();
         }
+    }
+
+    public int GetWinningPlayer()
+    {
+        if (player1Score > player2Score)
+        {
+            winningPlayer = 1;
+        }
+        else if (player2Score > player1Score)
+        {
+            winningPlayer = 2;
+        }
+        else
+        {
+            winningPlayer = 0;
+        }
+        return winningPlayer;
     }
 
     //Called when time runs out
