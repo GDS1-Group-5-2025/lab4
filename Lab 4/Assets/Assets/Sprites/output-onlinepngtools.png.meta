@@ -358,7 +358,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -372,7 +372,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -2809,7 +2809,115 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      output-onlinepngtools_0: 8085268007778768734
+      output-onlinepngtools_1: 5803401481538434042
+      output-onlinepngtools_10: -9041646763189933228
+      output-onlinepngtools_100: 1039298667679284054
+      output-onlinepngtools_101: 3399248254513398680
+      output-onlinepngtools_102: -8724884172163227183
+      output-onlinepngtools_103: 476950444666089800
+      output-onlinepngtools_104: -2256808656931299918
+      output-onlinepngtools_105: 1493033735831980366
+      output-onlinepngtools_106: 1790152127619597789
+      output-onlinepngtools_107: 7224031272992209146
+      output-onlinepngtools_11: 7502390291157507264
+      output-onlinepngtools_12: 2585685885763928849
+      output-onlinepngtools_13: 3425046249751168696
+      output-onlinepngtools_14: -2712597798906281939
+      output-onlinepngtools_15: 5602448764184174467
+      output-onlinepngtools_16: -5326554313949131741
+      output-onlinepngtools_17: -2707960472262710020
+      output-onlinepngtools_18: -5469485503294274078
+      output-onlinepngtools_19: 7480235353929986129
+      output-onlinepngtools_2: 4548562631146149808
+      output-onlinepngtools_20: 1325888766464955710
+      output-onlinepngtools_21: 5114684945539624901
+      output-onlinepngtools_22: -4275629047177540127
+      output-onlinepngtools_23: 4837722606296185215
+      output-onlinepngtools_24: -3632986409536590779
+      output-onlinepngtools_25: 9163730009413243174
+      output-onlinepngtools_26: 284522609975627470
+      output-onlinepngtools_27: -9142335771255036470
+      output-onlinepngtools_28: 8565552587832531609
+      output-onlinepngtools_29: -8746732248514599067
+      output-onlinepngtools_3: 1542341216846488844
+      output-onlinepngtools_30: 7198292403030335195
+      output-onlinepngtools_31: 5895357442185891917
+      output-onlinepngtools_32: 4054347967729042014
+      output-onlinepngtools_33: 3523365306245254702
+      output-onlinepngtools_34: 642892680651972943
+      output-onlinepngtools_35: 709421439465651648
+      output-onlinepngtools_36: 6084405258146860604
+      output-onlinepngtools_37: -7920406131492814877
+      output-onlinepngtools_38: 7024893684015593398
+      output-onlinepngtools_39: -8355778664284817497
+      output-onlinepngtools_4: -1448490699489269343
+      output-onlinepngtools_40: 8318513205495298421
+      output-onlinepngtools_41: -5675436151131881699
+      output-onlinepngtools_42: 4048842541284427867
+      output-onlinepngtools_43: -6122955930718393295
+      output-onlinepngtools_44: -8065502310986071062
+      output-onlinepngtools_45: -151727110305530752
+      output-onlinepngtools_46: 3092321177026322165
+      output-onlinepngtools_47: 7831007362019886349
+      output-onlinepngtools_48: 5435177961969485801
+      output-onlinepngtools_49: -2192253178366385027
+      output-onlinepngtools_5: 637047736431728491
+      output-onlinepngtools_50: -6066807712679809898
+      output-onlinepngtools_51: 4239632330662771297
+      output-onlinepngtools_52: -7190808876982653533
+      output-onlinepngtools_53: 8294005720687067727
+      output-onlinepngtools_54: -2834913453225303169
+      output-onlinepngtools_55: 5270423905029597844
+      output-onlinepngtools_56: 1074714249925373174
+      output-onlinepngtools_57: 1522585953885788018
+      output-onlinepngtools_58: -2523260447602254111
+      output-onlinepngtools_59: -7826625102529575004
+      output-onlinepngtools_6: -1861871151386463413
+      output-onlinepngtools_60: -3295268282952471007
+      output-onlinepngtools_61: -7657209071304278826
+      output-onlinepngtools_62: 4268487971055363394
+      output-onlinepngtools_63: 97881192690244859
+      output-onlinepngtools_64: 4834780610225085772
+      output-onlinepngtools_65: -4044207047389910695
+      output-onlinepngtools_66: -5243599320904762758
+      output-onlinepngtools_67: -652598269648447943
+      output-onlinepngtools_68: -863321533274126645
+      output-onlinepngtools_69: -1069962265470784944
+      output-onlinepngtools_7: -5658147275761265485
+      output-onlinepngtools_70: 8708350371369108625
+      output-onlinepngtools_71: -1282052897912361476
+      output-onlinepngtools_72: 3757639073726749693
+      output-onlinepngtools_73: 1111582935317022271
+      output-onlinepngtools_74: 1973380323185777377
+      output-onlinepngtools_75: 4084666934110176834
+      output-onlinepngtools_76: -479459613135909679
+      output-onlinepngtools_77: -3000968908721480841
+      output-onlinepngtools_78: 1150298890201760141
+      output-onlinepngtools_79: 1861091561747580950
+      output-onlinepngtools_8: -5566277572684184160
+      output-onlinepngtools_80: -3913954019330620542
+      output-onlinepngtools_81: 3575362314991147782
+      output-onlinepngtools_82: 8681425303906923801
+      output-onlinepngtools_83: -3362762171098537670
+      output-onlinepngtools_84: 2029903499687515007
+      output-onlinepngtools_85: -4758265916552410687
+      output-onlinepngtools_86: 4708740201312306053
+      output-onlinepngtools_87: -4032471585220431172
+      output-onlinepngtools_88: 8994966233684934174
+      output-onlinepngtools_89: 6924080240771184924
+      output-onlinepngtools_9: -6141377640103788678
+      output-onlinepngtools_90: -3948527930887601167
+      output-onlinepngtools_91: -6035977437672774129
+      output-onlinepngtools_92: -3650413036999907810
+      output-onlinepngtools_93: 3090934367189549425
+      output-onlinepngtools_94: -4353606953171333326
+      output-onlinepngtools_95: -929492241137406382
+      output-onlinepngtools_96: 2948470252529824275
+      output-onlinepngtools_97: 8453250145555196168
+      output-onlinepngtools_98: -2225433383141478721
+      output-onlinepngtools_99: 1292125198379642875
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
