@@ -17,6 +17,7 @@ public class TargetHealth : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             TargetHit(1);
+            collision.gameObject.SetActive(false);
         }
     }
 
