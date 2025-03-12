@@ -24,8 +24,7 @@ public class TargetHealth : MonoBehaviour
     private void TargetHit(int damage)
     {
         _bulletManager.ClearBullets();
-
-        ScoreManager.Instance.IncrementScoreForOppositionOf(2);
+        ScoreManager.Instance.IncrementScoreForTarget();
 
     }
 }
