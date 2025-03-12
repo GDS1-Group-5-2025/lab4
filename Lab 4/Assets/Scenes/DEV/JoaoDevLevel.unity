@@ -133,11 +133,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 5.46
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.48
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -186,6 +186,8 @@ GameObject:
   m_Component:
   - component: {fileID: 379410825}
   - component: {fileID: 379410826}
+  - component: {fileID: 379410829}
+  - component: {fileID: 379410828}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -202,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 379410824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3055269, y: -0.10134044, z: 0.04672955}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -221,7 +223,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingEnabled: 1
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 3217884554533520243, guid: 865b3be940ff5ea459256a992807513e, type: 3}
+--- !u!114 &379410828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379410824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb40e4c91b45b344abb6857cded8bd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Score: 0
+  player2Score: 0
+  scoreToWin: 7
+--- !u!114 &379410829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379410824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7cc9a6d048b0524b89a955cdd226622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +482,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000006b0a7fb6
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -543,6 +572,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 263754236584806813, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
+      propertyPath: playerNumber
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 721293962669958382, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: invertAim
       value: 1
@@ -557,11 +590,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -4.46
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.52
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.z
