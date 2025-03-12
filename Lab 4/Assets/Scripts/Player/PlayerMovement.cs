@@ -1,43 +1,38 @@
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float speed = 5f;
+    public float speed;
 
-    [Header("Movement Controls")]
-    public KeyCode upKey = KeyCode.UpArrow;
-    public KeyCode downKey = KeyCode.DownArrow;
+    private float _movementInput;
 
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
+    private PlayerInput _playerInput;
+    private InputActionMap _playerActionMap;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _playerInput = GetComponent<PlayerInput>();
+
+        // Get current player input action map
+        _playerActionMap = _playerInput.currentActionMap;
     }
 
     void Update()
     {
-        float vertical = 0f;
-
-        // Using input keys specified in the inspector
-        if (Input.GetKey(upKey))
-        {
-            vertical = 1f;
-        }
-        else if (Input.GetKey(downKey))
-        {
-            vertical = -1f;
-        }
-
         // Preserving x-component in case rb x-location is not frozen
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, vertical * speed);
+        _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _movementInput * speed);
     }
 
-    // Not used yet but can be called from options menu in future
-    public void SetMovementKeys(KeyCode newUpKey, KeyCode newDownKey)
+    public void Move(InputAction.CallbackContext ctx)
     {
-        upKey = newUpKey;
-        downKey = newDownKey;
+        if (ctx.action.actionMap == _playerActionMap)
+        {
+            _movementInput = ctx.ReadValue<float>();
+        }
     }
 }
