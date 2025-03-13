@@ -19,6 +19,7 @@ public class PlayerShooting : MonoBehaviour
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
     private BulletManager _bulletManager;
+    private Animator _animator;
 
     private int _bullets;
     private float _timeSinceLastShot;
@@ -37,6 +38,8 @@ public class PlayerShooting : MonoBehaviour
 
         // Get current player input action map
         _playerActionMap = _playerInput.currentActionMap;
+
+        _animator = GetComponent<Animator>();
 
         // Set initial bullet count
         _bullets = bulletCount;
@@ -82,6 +85,12 @@ public class PlayerShooting : MonoBehaviour
         _audioSource.PlayOneShot(shootSound);
         _bullets--;
         _timeSinceLastShot = 0f;
+
+        if (_animator != null)
+        {
+            _animator.SetTrigger("Shoot");
+        }
+
         if (_bullets == 0)
         {
             loadingImage.SetActive(true);

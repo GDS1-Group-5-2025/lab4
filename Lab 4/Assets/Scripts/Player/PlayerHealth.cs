@@ -14,12 +14,14 @@ public class PlayerHealth : MonoBehaviour
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
+    private Animator _animator;
 
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
         _playerMovement = GetComponent<PlayerMovement>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -27,6 +29,12 @@ public class PlayerHealth : MonoBehaviour
         _currentLives = startingLives;
         _startingPosition = transform.position;
         _startingRotation = transform.rotation;
+
+        if (_animator != null)
+        {
+            _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
+            _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -41,9 +49,28 @@ public class PlayerHealth : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        _currentLives -= damage;
+        _currentLives -= damage;      
 
-        switch (_currentLives)
+        if (_animator != null)
+        {
+            bool isOneLife = _currentLives == 1;
+            _animator.SetBool("IsOneLife", isOneLife);
+            Debug.Log("IsOneLife: " + isOneLife);
+
+            int twoLivesLayerIndex = _animator.GetLayerIndex("TwoLives");
+            int oneLifeLayerIndex = _animator.GetLayerIndex("OneLife");
+            
+
+            if (oneLifeLayerIndex != -1 && twoLivesLayerIndex != -1)
+            {
+                _animator.SetLayerWeight(oneLifeLayerIndex, isOneLife ? 1 : 0);
+                _animator.SetLayerWeight(twoLivesLayerIndex, isOneLife ? 0 : 1);
+                Debug.Log($"OneLife Layer Weight: {_animator.GetLayerWeight(oneLifeLayerIndex)}");
+                Debug.Log($"TwoLives Layer Weight: {_animator.GetLayerWeight(twoLivesLayerIndex)}");
+            }
+        }
+
+            switch (_currentLives)
         {
             case 1:
                 Debug.Log("Player has lost a life");
@@ -105,6 +132,12 @@ public class PlayerHealth : MonoBehaviour
         // Re-enable the collider
         _collider.enabled = true;
 
-        // Restore hat
+        // Restore hat + Reset animator layers
+ 
+        if (_animator != null)
+        {
+            _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
+            _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
+        }
     }
 }
