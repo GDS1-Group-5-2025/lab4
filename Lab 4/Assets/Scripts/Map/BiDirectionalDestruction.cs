@@ -3,6 +3,7 @@ using UnityEngine;
 public class BiDirectionalDestruction : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer[] sR;
+    [SerializeField] private BoxCollider2D bC;
     [SerializeField] private int lBound, uBound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,20 +16,26 @@ public class BiDirectionalDestruction : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D col) {
-        Debug.Log("1");
         if(col.gameObject.CompareTag("Bullet")){
-            Debug.Log("2");
             if(col.transform.position.x > this.transform.position.x){   //From the right
                 sR[uBound].enabled = false;
                 uBound -= 1;
-                Debug.Log("3a");
+                bC.size = new Vector2(bC.size.x-0.2f, bC.size.y);
+                bC.offset = new Vector2(bC.offset.x-0.1f, bC.offset.y);
+                if(uBound == 0){ DestroyObj(); }
             }
             else{                                                       //From the left
                 sR[lBound].enabled = false;
                 lBound += 1;
-                Debug.Log("3b");
+                bC.size = new Vector2(bC.size.x-0.2f, bC.size.y);
+                bC.offset = new Vector2(bC.offset.x+0.1f, bC.offset.y);
+                if(lBound == sR.Length-1){ DestroyObj(); }
             }
-            if(lBound > uBound){ Debug.Log("4"); Destroy(this.gameObject); }
+            if(lBound > uBound){ DestroyObj(); }
         }
+    }
+
+    private void DestroyObj(){
+        Destroy(this.gameObject);
     }
 }
