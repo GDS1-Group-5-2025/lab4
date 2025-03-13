@@ -4,6 +4,7 @@ public class BiDirectionalDestruction : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer[] sR;
     [SerializeField] private BoxCollider2D bC;
+    [SerializeField] private AudioSource aS;
     [SerializeField] private int lBound, uBound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +18,7 @@ public class BiDirectionalDestruction : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col) {
         if(col.gameObject.CompareTag("Bullet")){
+            aS.Play();
             if(col.transform.position.x > this.transform.position.x){   //From the right
                 sR[uBound].enabled = false;
                 uBound -= 1;
