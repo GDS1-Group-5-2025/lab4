@@ -32,6 +32,7 @@ public class EnemyShooting : BaseShooting
             Vector2 targetPos = (Vector2)player.position + Random.insideUnitCircle * shootingOffsetRadius;
             Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            angle -= 90f;
 
             // Attempt to shoot
             Vector2 spawnPos = (Vector2)transform.position + direction * 1f;
