@@ -1,3 +1,5 @@
+using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -37,6 +39,19 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_animator.GetBool("IsOneLife")){
+            _animator.SetLayerWeight(0, 1);
+            _animator.SetLayerWeight(1, 0);
+        }
+        else
+        {
+            _animator.SetLayerWeight(1, 1);
+            _animator.SetLayerWeight(0, 0);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Only respond if we collided with a "Bullet"
@@ -51,32 +66,19 @@ public class PlayerHealth : MonoBehaviour
     {
         _currentLives -= damage;      
 
-        if (_animator != null)
-        {
-            bool isOneLife = _currentLives == 1;
-            _animator.SetBool("IsOneLife", isOneLife);
-            Debug.Log("IsOneLife: " + isOneLife);
-
-            int twoLivesLayerIndex = _animator.GetLayerIndex("TwoLives");
-            int oneLifeLayerIndex = _animator.GetLayerIndex("OneLife");
-            
-
-            if (oneLifeLayerIndex != -1 && twoLivesLayerIndex != -1)
-            {
-                _animator.SetLayerWeight(oneLifeLayerIndex, isOneLife ? 1 : 0);
-                _animator.SetLayerWeight(twoLivesLayerIndex, isOneLife ? 0 : 1);
-                Debug.Log($"OneLife Layer Weight: {_animator.GetLayerWeight(oneLifeLayerIndex)}");
-                Debug.Log($"TwoLives Layer Weight: {_animator.GetLayerWeight(twoLivesLayerIndex)}");
-            }
-        }
-
-            switch (_currentLives)
+        switch (_currentLives)
         {
             case 1:
                 Debug.Log("Player has lost a life");
                 // Remove the player's hat here
+                if (_animator != null)
+                {
+                    _animator.SetBool("IsOneLife", true);
+                    Debug.Log(_animator.GetBool("IsOneLife"));
+                }
                 break;
             case <= 0:
+                _animator.SetTrigger("Dead");
                 _bulletManager.ClearBullets();
                 PlayerDeath();
                 Debug.Log("Player has died");
@@ -139,5 +141,6 @@ public class PlayerHealth : MonoBehaviour
             _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
             _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
         }
+        _animator.ResetTrigger("Dead");
     }
 }
