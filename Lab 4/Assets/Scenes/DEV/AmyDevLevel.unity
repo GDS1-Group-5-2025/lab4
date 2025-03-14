@@ -504,7 +504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   startingLives: 2
-  startingPosition: {x: 0, y: 0}
+  weapon: {fileID: 0}
 --- !u!1 &1735669158
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +592,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1052190126444271147, guid: c92427196b8c3bd43a3a6d68da06377f, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 1052190126444271147, guid: c92427196b8c3bd43a3a6d68da06377f, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1797597925952924412, guid: c92427196b8c3bd43a3a6d68da06377f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
