@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8485672123737798888}
   - component: {fileID: 5988430516233903720}
   - component: {fileID: 9140645194334612331}
+  - component: {fileID: -6659203365483517648}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -75,3 +76,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 99
   timerText: {fileID: 0}
+--- !u!114 &-6659203365483517648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871543613649356251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ade5e20608bf54fb8e112f0a12ff15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingEnabled: 1
+  bulletPrefab: {fileID: 3217884554533520243, guid: 865b3be940ff5ea459256a992807513e, type: 3}
