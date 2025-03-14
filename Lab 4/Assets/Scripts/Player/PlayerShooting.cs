@@ -16,22 +16,26 @@ public class PlayerShooting : BaseShooting
 
     private void OnEnable()
     {
-        // Hook up the input event
-        if (_playerActionMap != null && 
-            _playerActionMap.TryGetAction("Shoot", out InputAction shootAction))
+        if (_playerActionMap != null)
         {
-            shootAction.performed += Shoot;
+            InputAction shootAction = _playerActionMap.FindAction("Shoot");
+            if (shootAction != null)
+            {
+                shootAction.performed += Shoot;
+            }
         }
     }
 
     private void OnDisable()
     {
-        // Unsubscribe when disabled
-        if (_playerActionMap != null &&
-            _playerActionMap.TryGetAction("Shoot", out InputAction shootAction))
+        if (_playerActionMap != null)
         {
-            shootAction.performed -= Shoot;
-        }   
+            InputAction shootAction = _playerActionMap.FindAction("Shoot");
+            if (shootAction != null)
+            {
+                shootAction.performed -= Shoot;
+            }
+        }
     }
 
     public void Shoot(InputAction.CallbackContext ctx)
