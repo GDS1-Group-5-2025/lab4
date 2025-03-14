@@ -41,6 +41,11 @@ public class ScoreManager : MonoBehaviour
         CheckWinConditionFirstToReachScore();
     }
 
+    public void IncrementScoreForTarget()
+    {
+        player1Score++;
+    }
+
     private void CheckWinConditionFirstToReachScore()
     {
         if (player1Score == scoreToWin)
