@@ -6,7 +6,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
     [SerializeField] private GameObject weapon;
-
+    [SerializeField] private bool targetMode = false;
+ 
     private int _currentLives;
     private bool _isInvincible = false;
 
@@ -37,7 +38,10 @@ public class PlayerHealth : MonoBehaviour
         return;
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(1);
+            if (!targetMode)
+            {
+                TakeDamage(1);
+            }
             collision.gameObject.SetActive(false);
         }
     }
