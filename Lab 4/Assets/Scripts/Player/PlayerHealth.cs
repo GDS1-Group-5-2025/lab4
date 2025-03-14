@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,12 +16,14 @@ public class PlayerHealth : MonoBehaviour
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
         _playerMovement = GetComponent<PlayerMovement>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -112,13 +115,27 @@ public class PlayerHealth : MonoBehaviour
         // Set invincibility
         _isInvincible = true;
         _collider.enabled = false;
-        Invoke("RemoveInvincibility", 3f); 
-        // time is tentative
+
+        StartCoroutine(InvincibilityFlash());
+        Invoke("RemoveInvincibility", 2f); 
     }
     private void RemoveInvincibility()
     {
         _isInvincible = false;
         _collider.enabled = true;
-        Debug.Log("Player is now vulnerable again.")
+        StopCoroutine(InvincibilityFlash());
+        _spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
+        Debug.Log("Player is now vulnerable again.");
+    }
+    private IEnumerator InvincibilityFlash()
+    {
+        while (_isInvincible)
+        {
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.3f); 
+            yield return new WaitForSeconds (0.2f);
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.7f); 
+            yield return new WaitForSeconds (0.2f);
+        }
+
     }
 }
