@@ -15,6 +15,8 @@ public class ScoreManager : MonoBehaviour
     public event Action<int> OnGameEnded;
     [SerializeField] private Text player1ScoreText;
     [SerializeField] private Text player2ScoreText;
+
+    [SerializeField] private AudioSource audioSource;
     private void Awake()
     {
         // If there is already an instance and it�s not this one, destroy this duplicate.
@@ -53,7 +55,7 @@ public class ScoreManager : MonoBehaviour
         {
             player1Score++;
         }
-
+        UpdateScoreUI();
         CheckWinConditionFirstToReachScore();
     }
 
@@ -103,6 +105,9 @@ public class ScoreManager : MonoBehaviour
 
     private void EndGame()
     {
+        if (audioSource != null && !audioSource.isPlaying){
+            audioSource.Play();
+        }
         OnGameEnded?.Invoke(winningPlayer);
         ResetScores();
         UpdateScoreUI();
