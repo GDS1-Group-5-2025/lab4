@@ -23,5 +23,5 @@ public class BulletManager : MonoBehaviour
             Destroy(bullet);
         }
         _bullets.Clear();
-    }
+    }   
 }
