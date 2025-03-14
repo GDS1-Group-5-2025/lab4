@@ -16,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
+    public float invincibilityDuration = 2f;
 
     private void Awake()
     {
@@ -116,13 +117,12 @@ public class PlayerHealth : MonoBehaviour
         // Set invincibility
         _isInvincible = true;
         _collider.enabled = false;
-        Invoke("RemoveInvincibility", 3f); 
-        // time is tentative
+        Invoke("RemoveInvincibility", invincibilityDuration);
     }
     private void RemoveInvincibility()
     {
         _isInvincible = false;
         _collider.enabled = true;
-        Debug.Log("Player is now vulnerable again.")
+        Debug.Log("Player is now vulnerable again.");
     }
 }
