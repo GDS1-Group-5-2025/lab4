@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -12,10 +13,13 @@ public class ScoreManager : MonoBehaviour
     private int winningPlayer;
 
     public event Action<int> OnGameEnded;
+    [SerializeField] private Text player1ScoreText;
+    [SerializeField] private Text player2ScoreText;
 
+    [SerializeField] private AudioSource audioSource;
     private void Awake()
     {
-        // If there is already an instance and it’s not this one, destroy this duplicate.
+        // If there is already an instance and itï¿½s not this one, destroy this duplicate.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -24,6 +28,20 @@ public class ScoreManager : MonoBehaviour
 
         // Otherwise, set this as the active instance
         Instance = this;
+
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (player1ScoreText != null)
+        {
+            player1ScoreText.text = "Player 1: " + player1Score.ToString();
+        }
+        if (player2ScoreText != null)
+        {
+            player2ScoreText.text = "Player 2: " + player2Score.ToString();
+        }
     }
 
     public void IncrementScoreForOppositionOf(int player)
@@ -37,7 +55,7 @@ public class ScoreManager : MonoBehaviour
         {
             player1Score++;
         }
-
+        UpdateScoreUI();
         CheckWinConditionFirstToReachScore();
     }
 
@@ -92,7 +110,11 @@ public class ScoreManager : MonoBehaviour
 
     private void EndGame()
     {
+        if (audioSource != null && !audioSource.isPlaying){
+            audioSource.Play();
+        }
         OnGameEnded?.Invoke(winningPlayer);
         ResetScores();
+        UpdateScoreUI();
     }
 }
