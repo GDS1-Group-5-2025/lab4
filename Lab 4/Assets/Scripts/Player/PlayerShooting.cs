@@ -24,6 +24,7 @@ public class PlayerShooting : MonoBehaviour
     private float _timeSinceLastShot;
     private bool _isReloading;
     private float _timeSinceReloadStart;
+    private bool _shootingDisabled = false;
 
     private void Start()
     {
@@ -71,6 +72,12 @@ public class PlayerShooting : MonoBehaviour
         if (ctx.action.actionMap != _playerActionMap || !ctx.performed) return;
         if (_timeSinceLastShot < 1f / fireRate) return;
 
+        if (_shootingDisabled)
+        {
+            Debug.Log("Shooting is temporarily disabled after respawning.");
+            return;
+        }
+
         if (_isReloading)
         {
             // Play empty gun sound
@@ -88,5 +95,14 @@ public class PlayerShooting : MonoBehaviour
             _isReloading = true;
             _timeSinceReloadStart = 0f;
         }
+    }
+    public void DisableShooting(float seconds)
+    {
+        _shootingDisabled = true;
+        Invoke("EnableShooting", seconds);
+    }
+    private void EnableShooting()
+    {
+        _shootingDisabled = false;
     }
 }

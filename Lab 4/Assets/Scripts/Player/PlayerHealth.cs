@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,18 +10,21 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private bool targetMode = false;
  
     private int _currentLives;
+    private bool _isInvincible = false;
 
     private Collider2D _collider;
     private PlayerMovement _playerMovement;
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
+    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
         _playerMovement = GetComponent<PlayerMovement>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -33,6 +37,8 @@ public class PlayerHealth : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Only respond if we collided with a "Bullet"
+        if (_isInvincible)
+        return;
         if (collision.gameObject.CompareTag("Bullet"))
         {
             if (!targetMode)
@@ -110,5 +116,31 @@ public class PlayerHealth : MonoBehaviour
         _collider.enabled = true;
 
         // Restore hat
+        // Set invincibility
+        _isInvincible = true;
+        _collider.enabled = false;
+
+        StartCoroutine(InvincibilityFlash());
+        Invoke("RemoveInvincibility", 2f); 
+        GetComponent<PlayerShooting>()?.DisableShooting(2f);
+    }
+    private void RemoveInvincibility()
+    {
+        _isInvincible = false;
+        _collider.enabled = true;
+        StopCoroutine(InvincibilityFlash());
+        _spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
+        Debug.Log("Player is now vulnerable again.");
+    }
+    private IEnumerator InvincibilityFlash()
+    {
+        while (_isInvincible)
+        {
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.3f); 
+            yield return new WaitForSeconds (0.2f);
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.7f); 
+            yield return new WaitForSeconds (0.2f);
+        }
+
     }
 }
