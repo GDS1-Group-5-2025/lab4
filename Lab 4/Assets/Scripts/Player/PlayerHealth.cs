@@ -118,6 +118,7 @@ public class PlayerHealth : MonoBehaviour
 
         StartCoroutine(InvincibilityFlash());
         Invoke("RemoveInvincibility", 2f); 
+        GetComponent<PlayerShooting>()?.DisableShooting(2f);
     }
     private void RemoveInvincibility()
     {
