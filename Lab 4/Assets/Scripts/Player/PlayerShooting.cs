@@ -96,10 +96,13 @@ public class PlayerShooting : MonoBehaviour
             _timeSinceReloadStart = 0f;
         }
     }
-    public void DisableShooting(float seconds)
+    public void DisableShooting(float seconds = 0)
     {
         _shootingDisabled = true;
-        Invoke("EnableShooting", seconds);
+        if(seconds > 0){
+            Invoke("EnableShooting", seconds);
+        }
+        
     }
     private void EnableShooting()
     {
