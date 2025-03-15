@@ -33,6 +33,7 @@ public class BiDirectionalDestruction : MonoBehaviour
                 bC.offset = new Vector2(bC.offset.x+0.1f, bC.offset.y);
                 if(lBound == sR.Length-1){ DestroyObj(); }
             }
+            Destroy(col.gameObject);
             if(lBound > uBound){ DestroyObj(); }
         }
     }
