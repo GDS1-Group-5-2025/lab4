@@ -54,7 +54,9 @@ public class PlayerShooting : BaseShooting
         }
 
         // Attempt to shoot using the base method
-        AttemptShoot(spawnPos, rotation);
-        //_animator.SetBool("Shoot", false);
+        if (ctx.action.actionMap == _playerActionMap)
+        {
+            AttemptShoot(spawnPos, rotation);
+        }
     }
 }
