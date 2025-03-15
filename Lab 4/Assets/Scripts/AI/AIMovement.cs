@@ -23,6 +23,9 @@ public class AIMovement : MonoBehaviour, IMovement
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("here");
+        if(other.gameObject.CompareTag("Wall")){
+            if(this.transform.position.y < other.transform.position.y){ destY = upperBound = this.transform.position.y; }
+            else if(this.transform.position.y > other.transform.position.y){ destY = lowerBound = this.transform.position.y; }
+        }
     }
 }
