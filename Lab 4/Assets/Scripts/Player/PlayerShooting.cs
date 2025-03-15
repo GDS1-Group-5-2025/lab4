@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerShooting : BaseShooting
 {
@@ -17,8 +18,9 @@ public class PlayerShooting : BaseShooting
         _animator = GetComponentInParent<Animator>();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         if (_playerActionMap != null)
         {
             InputAction shootAction = _playerActionMap.FindAction("Shoot");
@@ -29,7 +31,7 @@ public class PlayerShooting : BaseShooting
         }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         if (_playerActionMap != null)
         {
@@ -39,10 +41,14 @@ public class PlayerShooting : BaseShooting
                 shootAction.performed -= Shoot;
             }
         }
+
+        base.OnDisable();
     }
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
+        Debug.Log(canShoot);
+        if (!canShoot) return;
         if (!ctx.performed) return;
 
         Vector2 spawnPos = transform.position + transform.up * 1f;

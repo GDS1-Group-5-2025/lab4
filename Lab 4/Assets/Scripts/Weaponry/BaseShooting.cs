@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 public abstract class BaseShooting : MonoBehaviour
@@ -21,6 +22,8 @@ public abstract class BaseShooting : MonoBehaviour
     protected float _timeSinceLastShot;
     protected float _timeSinceReloadStart;
     protected bool _isReloading;
+
+    public bool canShoot = true;
 
     protected virtual void Start()
     {
@@ -92,6 +95,31 @@ public abstract class BaseShooting : MonoBehaviour
 
         if (shootSound != null)
             _audioSource.PlayOneShot(shootSound);
+    }
+
+    private IEnumerator StopShootingTemporarily(float duration)
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(duration);
+        canShoot = true;
+    }
+
+    protected virtual void OnEnable()
+    {
+        // Subscribe to any player’s death
+        PlayerHealth.OnAnyPlayerDied += HandleAnyPlayerDied;
+    }
+
+    protected virtual void OnDisable()
+    {
+        // Unsubscribe when disabled/destroyed
+        PlayerHealth.OnAnyPlayerDied -= HandleAnyPlayerDied;
+    }
+
+    private void HandleAnyPlayerDied()
+    {
+        // Stop shooting for 2 seconds
+        StartCoroutine(StopShootingTemporarily(2f));
     }
 
     // Begins reload process
