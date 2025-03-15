@@ -7,7 +7,6 @@ public class EnemyShooting : BaseShooting
     public float shootingOffsetRadius = 1f;
 
     private Transform player;
-    private bool canShoot = true;
 
     protected override void Start()
     {
@@ -18,31 +17,6 @@ public class EnemyShooting : BaseShooting
         }
 
         base.Start();
-    }
-
-    private void OnEnable()
-    {
-        // Subscribe to any player’s death
-        PlayerHealth.OnAnyPlayerDied += HandleAnyPlayerDied;
-    }
-
-    private void OnDisable()
-    {
-        // Unsubscribe when disabled/destroyed
-        PlayerHealth.OnAnyPlayerDied -= HandleAnyPlayerDied;
-    }
-
-    private void HandleAnyPlayerDied()
-    {
-        // Stop shooting for 2 seconds
-        StartCoroutine(StopShootingTemporarily(2f));
-    }
-
-    private IEnumerator StopShootingTemporarily(float duration)
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(duration);
-        canShoot = true;
     }
 
     protected override void Update()
@@ -68,4 +42,3 @@ public class EnemyShooting : BaseShooting
         }
     }
 }
-

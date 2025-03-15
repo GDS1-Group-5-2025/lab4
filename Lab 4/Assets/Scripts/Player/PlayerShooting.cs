@@ -6,7 +6,6 @@ public class PlayerShooting : BaseShooting
 {
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
-    private bool canShoot = true;
 
     protected override void Start()
     {
@@ -16,9 +15,9 @@ public class PlayerShooting : BaseShooting
         _playerActionMap = _playerInput.currentActionMap;
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        PlayerHealth.OnAnyPlayerDied += HandleAnyPlayerDied;
+        base.OnEnable();
         if (_playerActionMap != null)
         {
             InputAction shootAction = _playerActionMap.FindAction("Shoot");
@@ -29,9 +28,8 @@ public class PlayerShooting : BaseShooting
         }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        PlayerHealth.OnAnyPlayerDied -= HandleAnyPlayerDied;
         if (_playerActionMap != null)
         {
             InputAction shootAction = _playerActionMap.FindAction("Shoot");
@@ -40,23 +38,13 @@ public class PlayerShooting : BaseShooting
                 shootAction.performed -= Shoot;
             }
         }
-    }
 
-    private void HandleAnyPlayerDied()
-    {
-        // Stop shooting for 2 seconds
-        StartCoroutine(StopShootingTemporarily(2f));
-    }
-
-    private IEnumerator StopShootingTemporarily(float duration)
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(duration);
-        canShoot = true;
+        base.OnDisable();
     }
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
+        Debug.Log(canShoot);
         if (!canShoot) return;
         if (!ctx.performed) return;
 
