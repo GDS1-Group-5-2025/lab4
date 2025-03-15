@@ -21,4 +21,8 @@ public class AIMovement : MonoBehaviour, IMovement
         }
         this.transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(startPos.x, destY), speed*Time.deltaTime);
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        Debug.Log("here");
+    }
 }
