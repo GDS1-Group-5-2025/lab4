@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuManager : MonoBehaviour
 {
+
     public void ClickSPS(){
         SceneManager.LoadScene("SinglePlayerSelect");
     }
