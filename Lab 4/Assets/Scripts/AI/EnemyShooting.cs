@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyShooting : BaseShooting
 {
@@ -23,6 +24,7 @@ public class EnemyShooting : BaseShooting
         // Still call the base update for reload logic, etc.
         base.Update();
 
+        if (!canShoot) return;
         if (player == null) return;
 
         float distance = Vector2.Distance(transform.position, player.position);
@@ -40,4 +42,3 @@ public class EnemyShooting : BaseShooting
         }
     }
 }
-

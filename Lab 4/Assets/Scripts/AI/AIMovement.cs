@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AIMovement : MonoBehaviour
+public class AIMovement : MonoBehaviour, IMovement
 {
     [SerializeField] private Vector2 startPos;
     [SerializeField] private float speed;
