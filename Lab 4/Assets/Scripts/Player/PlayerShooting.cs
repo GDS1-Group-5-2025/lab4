@@ -46,6 +46,9 @@ public class PlayerShooting : BaseShooting
         Quaternion rotation = transform.rotation;
 
         // Attempt to shoot using the base method
-        AttemptShoot(spawnPos, rotation);
+        if (ctx.action.actionMap == _playerActionMap)
+        {
+            AttemptShoot(spawnPos, rotation);
+        }
     }
 }
