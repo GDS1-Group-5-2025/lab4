@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class PlayerShooting : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     public AudioClip emptyGunSound;
 
     public GameObject loadingImage;
+    public Image radialProgressBar;
 
     private AudioSource _audioSource;
     private PlayerInput _playerInput;
@@ -40,6 +42,8 @@ public class PlayerShooting : MonoBehaviour
 
         // Set initial bullet count
         _bullets = bulletCount;
+        // progress bar set to 0
+        radialProgressBar.fillAmount = 0f;
     }
 
 
@@ -48,15 +52,19 @@ public class PlayerShooting : MonoBehaviour
         // If player is reloading
         if (_isReloading)
         {
+            // Update progress bar
             _timeSinceReloadStart += Time.deltaTime;
+            float progress = _timeSinceReloadStart / reloadTime;
+            radialProgressBar.fillAmount = progress;
             // If reload time has passed
             if (_timeSinceReloadStart >= reloadTime)
             {
-                // Reset bullets and reload flag
+                // Reset bullets, progress bar and reload flag
                 _bullets = bulletCount;
                 _isReloading = false;
                 _audioSource.PlayOneShot(reloadSound);
                 loadingImage.SetActive(false);
+                radialProgressBar.fillAmount = 0f;
             }
         }
 
