@@ -6,6 +6,7 @@ public class PlayerShooting : BaseShooting
 {
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
+    private Animator _animator;
 
     protected override void Start()
     {
@@ -13,6 +14,8 @@ public class PlayerShooting : BaseShooting
 
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerActionMap = _playerInput.currentActionMap;
+
+        _animator = GetComponentInParent<Animator>();
     }
 
     protected override void OnEnable()
@@ -50,6 +53,11 @@ public class PlayerShooting : BaseShooting
 
         Vector2 spawnPos = transform.position + transform.up * 1f;
         Quaternion rotation = transform.rotation;
+
+        if (_animator != null && !_isReloading)
+        {
+            _animator.SetTrigger("Shoot");
+        }
 
         // Attempt to shoot using the base method
         if (ctx.action.actionMap == _playerActionMap)
