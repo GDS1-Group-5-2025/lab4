@@ -1,8 +1,12 @@
 using UnityEngine;
+using System;
 using UnityEngine.UIElements;
 
 public class PlayerHealth : MonoBehaviour
 {
+    // Event so that other classes can subscribe to the player dying
+    public static event Action OnAnyPlayerDied;
+
     [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
     [SerializeField] private GameObject weapon;
@@ -71,6 +75,7 @@ public class PlayerHealth : MonoBehaviour
         //Change Score
         ScoreManager.Instance.IncrementScoreForOppositionOf(playerNumber);
 
+        OnAnyPlayerDied?.Invoke();
 
         // Disable movement
         if (_playerMovement )
