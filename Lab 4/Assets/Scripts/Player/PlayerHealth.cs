@@ -49,7 +49,6 @@ public class PlayerHealth : MonoBehaviour
             {
                 TakeDamage(1);
             }
-            collision.gameObject.SetActive(false);
         }
     }
 
