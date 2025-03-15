@@ -1,101 +1,59 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(AudioSource))]
-public class PlayerShooting : MonoBehaviour
+public class PlayerShooting : BaseShooting
 {
-
-    public int bulletCount = 10;
-    public float fireRate = 0.5f;
-    public float reloadTime = 2f;
-
-    public AudioClip shootSound;
-    public AudioClip reloadSound;
-    public AudioClip emptyGunSound;
-
-    public GameObject loadingImage;
-
-    private AudioSource _audioSource;
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
-    private BulletManager _bulletManager;
     private Animator _animator;
 
-    private int _bullets;
-    private float _timeSinceLastShot;
-    private bool _isReloading;
-    private float _timeSinceReloadStart;
-
-    private void Start()
+    protected override void Start()
     {
-        // Get audio source component
-        _audioSource = GetComponent<AudioSource>();
+        base.Start(); // Call the base Start to set up everything
 
-        // Get Bullet Manager
-        _bulletManager = FindFirstObjectByType<BulletManager>();
-        // Get player input component
         _playerInput = GetComponentInParent<PlayerInput>();
-
-        // Get current player input action map
         _playerActionMap = _playerInput.currentActionMap;
 
         _animator = GetComponent<Animator>();
-
-        // Set initial bullet count
-        _bullets = bulletCount;
     }
 
-
-    private void Update()
+    private void OnEnable()
     {
-        // If player is reloading
-        if (_isReloading)
+        if (_playerActionMap != null)
         {
-            _timeSinceReloadStart += Time.deltaTime;
-            // If reload time has passed
-            if (_timeSinceReloadStart >= reloadTime)
+            InputAction shootAction = _playerActionMap.FindAction("Shoot");
+            if (shootAction != null)
             {
-                // Reset bullets and reload flag
-                _bullets = bulletCount;
-                _isReloading = false;
-                _audioSource.PlayOneShot(reloadSound);
-                loadingImage.SetActive(false);
+                shootAction.performed += Shoot;
             }
         }
+    }
 
-        if (_timeSinceLastShot <= 1f / fireRate)
+    private void OnDisable()
+    {
+        if (_playerActionMap != null)
         {
-            _timeSinceLastShot += Time.deltaTime;
+            InputAction shootAction = _playerActionMap.FindAction("Shoot");
+            if (shootAction != null)
+            {
+                shootAction.performed -= Shoot;
+            }
         }
     }
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
-        if (ctx.action.actionMap != _playerActionMap || !ctx.performed) return;
-        if (_timeSinceLastShot < 1f / fireRate) return;
+        if (!ctx.performed) return;
 
-        if (_isReloading)
-        {
-            // Play empty gun sound
-            _audioSource.PlayOneShot(emptyGunSound);
-            return;
-        }
-
-        _bulletManager.Shoot(transform.position + transform.up * 1f, transform.rotation);
-        _audioSource.PlayOneShot(shootSound);
-        _bullets--;
-        _timeSinceLastShot = 0f;
+        Vector2 spawnPos = transform.position + transform.up * 1f;
+        Quaternion rotation = transform.rotation;
 
         if (_animator != null)
         {
             _animator.SetTrigger("Shoot");
         }
 
-        if (_bullets == 0)
-        {
-            loadingImage.SetActive(true);
-            _isReloading = true;
-            _timeSinceReloadStart = 0f;
-        }
+        // Attempt to shoot using the base method
+        AttemptShoot(spawnPos, rotation);
     }
 }

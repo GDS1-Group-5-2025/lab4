@@ -8,8 +8,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
     [SerializeField] private GameObject weapon;
-
+    [SerializeField] private bool targetMode = false;
+ 
     private int _currentLives;
+    private bool _isInvincible = false;
 
     private Collider2D _collider;
     private PlayerMovement _playerMovement;
@@ -17,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
     private Animator _animator;
+    public float invincibilityDuration = 2f;
 
     private void Awake()
     {
@@ -55,9 +58,14 @@ public class PlayerHealth : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Only respond if we collided with a "Bullet"
+        if (_isInvincible)
+        return;
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            TakeDamage(1);
+            if (!targetMode)
+            {
+                TakeDamage(1);
+            }
             collision.gameObject.SetActive(false);
         }
     }
@@ -142,5 +150,16 @@ public class PlayerHealth : MonoBehaviour
             _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
         }
         _animator.ResetTrigger("Dead");
+        // Restore hat
+        // Set invincibility
+        _isInvincible = true;
+        _collider.enabled = false;
+        Invoke("RemoveInvincibility", invincibilityDuration);
+    }
+    private void RemoveInvincibility()
+    {
+        _isInvincible = false;
+        _collider.enabled = true;
+        Debug.Log("Player is now vulnerable again.");
     }
 }
