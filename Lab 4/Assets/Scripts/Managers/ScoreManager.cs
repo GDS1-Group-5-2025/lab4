@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -114,7 +115,26 @@ public class ScoreManager : MonoBehaviour
             audioSource.Play();
         }
         OnGameEnded?.Invoke(winningPlayer);
+
+        if (winningPlayer == 1)
+        {
+            string currentScene = SceneManager.GetActiveScene().name;
+
+            if (currentScene == "PvE")
+            {
+                Debug.Log("Level 2");
+                SceneManager.LoadScene("PvE2");
+            }
+            else if (currentScene == "PvE2")
+            {
+                Debug.Log("Level 3");
+                SceneManager.LoadScene("PvE3");
+            }
+        }
+
         ResetScores();
         UpdateScoreUI();
+
+
     }
 }
