@@ -14,7 +14,7 @@ public class PlayerShooting : BaseShooting
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerActionMap = _playerInput.currentActionMap;
 
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInParent<Animator>();
     }
 
     private void OnEnable()
@@ -48,12 +48,13 @@ public class PlayerShooting : BaseShooting
         Vector2 spawnPos = transform.position + transform.up * 1f;
         Quaternion rotation = transform.rotation;
 
-        if (_animator != null)
+        if (_animator != null && !_isReloading)
         {
             _animator.SetTrigger("Shoot");
         }
 
         // Attempt to shoot using the base method
         AttemptShoot(spawnPos, rotation);
+        //_animator.SetBool("Shoot", false);
     }
 }
