@@ -158,6 +158,7 @@ public class PlayerHealth : MonoBehaviour
 
         // Reset lives
         _currentLives = startingLives;
+        _animator.SetBool("IsOneLife", false);
 
         // Re-enable movement
         if (_movement != null)
