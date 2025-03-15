@@ -17,9 +17,15 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private Text player2ScoreText;
 
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip winSound;
+    [SerializeField] private AudioClip loseSound;
+
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject loseScreen;
+
     private void Awake()
     {
-        // If there is already an instance and it�s not this one, destroy this duplicate.
+        // If there is already an instance and it's not this one, destroy this duplicate.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -30,6 +36,7 @@ public class ScoreManager : MonoBehaviour
         Instance = this;
 
         UpdateScoreUI();
+        HideWinLoseScreens();
     }
 
     private void UpdateScoreUI()
@@ -70,12 +77,14 @@ public class ScoreManager : MonoBehaviour
         {
             Debug.Log("Player 1 wins!");
             winningPlayer = 1;
+            ShowEndScreen(winScreen, winSound);
             EndGame();
         }
         else if (player2Score == scoreToWin)
         {
             Debug.Log("Player 2 wins!");
             winningPlayer = 2;
+            ShowEndScreen(loseScreen, loseSound);
             EndGame();
         }
     }
@@ -86,11 +95,13 @@ public class ScoreManager : MonoBehaviour
         if (player1Score > player2Score)
         {
             winningPlayer = 1;
+            ShowEndScreen(winScreen, winSound);
             Debug.Log("Player 1 wins!");
         }
         else if (player2Score > player1Score)
         {
             winningPlayer = 2;
+            ShowEndScreen(loseScreen, loseSound);
             Debug.Log("Player 2 wins!");
         }
         else
@@ -100,19 +111,41 @@ public class ScoreManager : MonoBehaviour
         }
         EndGame();
     }
+    private void ShowEndScreen(GameObject screen, AudioClip sound)
+    {
+        HideWinLoseScreens();
+        if (screen != null)
+        {
+            screen.SetActive(true);
+        }
+        PlaySound(sound);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+    }
+
+    private void HideWinLoseScreens()
+    {
+        if (winScreen != null) winScreen.SetActive(false);
+        if (loseScreen != null) loseScreen.SetActive(false);
+    }
 
     private void ResetScores()
     {
         player1Score = 0;
         player2Score = 0;
         winningPlayer = 0;
+        HideWinLoseScreens();
     }
 
     private void EndGame()
     {
-        if (audioSource != null && !audioSource.isPlaying){
-            audioSource.Play();
-        }
         OnGameEnded?.Invoke(winningPlayer);
         ResetScores();
         UpdateScoreUI();
