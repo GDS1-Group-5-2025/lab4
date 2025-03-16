@@ -1,13 +1,12 @@
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using System.Collections;
-using UnityEngine.UIElements;
-using System.Collections;
+using UnityEngine.Serialization;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private static readonly int IsOneLife = Animator.StringToHash("IsOneLife");
+    private static readonly int Dead = Animator.StringToHash("Dead");
     // Event so that other classes can subscribe to the player dying
     public static event Action OnAnyPlayerDied;
 
@@ -16,7 +15,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private GameObject weapon;
     [SerializeField] private bool targetMode;
 
-    [SerializeField] private int _currentLives;
+    [FormerlySerializedAs("_currentLives")]
+    [SerializeField] private int currentLives;
     private bool _isInvincible;
 
     private IMovement _movement;
@@ -28,7 +28,6 @@ public class PlayerHealth : MonoBehaviour
     private Quaternion _startingRotation;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    public float invincibilityDuration = 2f;
 
     private void Awake()
     {
@@ -42,11 +41,11 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        _currentLives = startingLives;
+        currentLives = startingLives;
         _startingPosition = transform.position;
         _startingRotation = transform.rotation;
 
-        if (_animator != null)
+        if (_animator)
         {
             _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
             _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
@@ -55,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if (_animator.GetBool("IsOneLife"))
+        if (_animator.GetBool(IsOneLife))
         {
             _animator.SetLayerWeight(0, 1);
             _animator.SetLayerWeight(1, 0);
@@ -90,21 +89,21 @@ public class PlayerHealth : MonoBehaviour
             _playerPowerup.TakeDamage();
         }
 
-        _currentLives -= damage;
+        currentLives -= damage;
 
-        switch (_currentLives)
+        switch (currentLives)
         {
             case 1:
                 Debug.Log("Player has lost a life");
                 // Remove the player's hat here
                 if (_animator != null)
                 {
-                    _animator.SetBool("IsOneLife", true);
-                    Debug.Log(_animator.GetBool("IsOneLife"));
+                    _animator.SetBool(IsOneLife, true);
+                    Debug.Log(_animator.GetBool(IsOneLife));
                 }
                 break;
             case <= 0:
-                _animator.SetTrigger("Dead");
+                _animator.SetTrigger(Dead);
                 _bulletManager.ClearBullets();
                 PlayerDeath();
                 Debug.Log("Player has died");
@@ -169,8 +168,8 @@ public class PlayerHealth : MonoBehaviour
         transform.rotation = _startingRotation;
 
         // Reset lives
-        _currentLives = startingLives;
-        _animator.SetBool("IsOneLife", false);
+        currentLives = startingLives;
+        _animator.SetBool(IsOneLife, false);
 
         // Re-enable movement
         if (_movement != null)
@@ -198,7 +197,7 @@ public class PlayerHealth : MonoBehaviour
         _collider.enabled = false;
 
         StartCoroutine(InvincibilityFlash());
-        Invoke("RemoveInvincibility", 2f);
+        Invoke(nameof(RemoveInvincibility), 2f);
         GetComponent<PlayerShooting>()?.DisableShooting(2f);
     }
     private void RemoveInvincibility()

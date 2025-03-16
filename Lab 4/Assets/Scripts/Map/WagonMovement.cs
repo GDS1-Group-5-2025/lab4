@@ -2,34 +2,38 @@ using UnityEngine;
 
 public class WagonMovement : MonoBehaviour
 {
-    private Vector2 startPos;
     [SerializeField] private Vector2 endPos;
     [SerializeField] private float vertMotion, speed, animationChangeRateConst;
-    private float animationChangeRate;
     [SerializeField] private int currSprite;
     [SerializeField] private Sprite[] sprites;
-    private bool entering = true;
+    [SerializeField] private bool entering = true;
 
-    void Start(){
-        startPos = this.transform.position;
-        animationChangeRate = animationChangeRateConst;
+    private Vector2 _startPos;
+    private float _animationChangeRate;
+
+    private SpriteRenderer _spriteRenderer;
+
+    private void Start(){
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _startPos = transform.position;
+        _animationChangeRate = animationChangeRateConst;
     }
-    void Update()
+    private void Update()
     {
-        animationChangeRate -= Time.deltaTime;
-        if(animationChangeRate <= 0){
+        _animationChangeRate -= Time.deltaTime;
+        if(_animationChangeRate <= 0){
             currSprite += 1;
             if(currSprite == sprites.Length){ currSprite = 0;}
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = sprites[currSprite];
-            animationChangeRate = animationChangeRateConst;
+            _spriteRenderer.sprite = sprites[currSprite];
+            _animationChangeRate = animationChangeRateConst;
         }
 
-        if(vertMotion == 1){
-            if(this.transform.position.y > endPos.y){ this.transform.position = startPos; }
+        if(Mathf.Approximately(vertMotion, 1)){
+            if(transform.position.y > endPos.y){ transform.position = _startPos; }
         }
-        else if(vertMotion == -1){
-            if(this.transform.position.y < endPos.y){ this.transform.position = startPos; }
+        else if(Mathf.Approximately(vertMotion, -1)){
+            if(transform.position.y < endPos.y){ transform.position = _startPos; }
         }
-        this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y+vertMotion*speed*Time.deltaTime);
+        transform.position = new Vector2(transform.position.x, transform.position.y+vertMotion*speed*Time.deltaTime);
     }
 }

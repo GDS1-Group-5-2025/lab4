@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class PlayerShooting : BaseShooting
 {
+    private static readonly int Shoot1 = Animator.StringToHash("Shoot");
     public Image radialProgressBar;
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
-    private bool _shootingDisabled = false;
+    private bool _shootingDisabled;
 
     protected override void Start()
     {
@@ -29,9 +30,9 @@ public class PlayerShooting : BaseShooting
         base.Update();
 
         // Update radial progress bar if reloading
-        if (_isReloading && radialProgressBar != null)
+        if (isReloading && radialProgressBar )
         {
-            float progress = _timeSinceReloadStart / reloadTime;
+            var progress = timeSinceReloadStart / reloadTime;
             radialProgressBar.fillAmount = progress;
         }
     }
@@ -41,26 +42,20 @@ public class PlayerShooting : BaseShooting
         base.OnEnable();
 
         // Subscribe shoot action
-        if (_playerActionMap != null)
+        var shootAction = _playerActionMap?.FindAction("Shoot");
+        if (shootAction != null)
         {
-            InputAction shootAction = _playerActionMap.FindAction("Shoot");
-            if (shootAction != null)
-            {
-                shootAction.performed += Shoot;
-            }
+            shootAction.performed += Shoot;
         }
     }
 
     protected override void OnDisable()
     {
         // Unsubscribe shoot action
-        if (_playerActionMap != null)
+        var shootAction = _playerActionMap?.FindAction("Shoot");
+        if (shootAction != null)
         {
-            InputAction shootAction = _playerActionMap.FindAction("Shoot");
-            if (shootAction != null)
-            {
-                shootAction.performed -= Shoot;
-            }
+            shootAction.performed -= Shoot;
         }
 
         base.OnDisable();
@@ -76,11 +71,11 @@ public class PlayerShooting : BaseShooting
             return;
         }
 
-        if (_isReloading)
+        if (isReloading)
         {
             // Optionally play empty gun sound
             if (emptyGunSound != null)
-                _audioSource.PlayOneShot(emptyGunSound);
+                audioSource.PlayOneShot(emptyGunSound);
             return;
         }
 
@@ -88,7 +83,7 @@ public class PlayerShooting : BaseShooting
         if (ctx.action.actionMap == _playerActionMap)
         {
             Vector2 spawnPos = transform.position + transform.up * 1f;
-            Quaternion rotation = transform.rotation;
+            var rotation = transform.rotation;
             AttemptShoot(spawnPos, rotation);
         }
     }

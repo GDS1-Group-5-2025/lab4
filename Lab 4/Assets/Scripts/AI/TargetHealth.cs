@@ -1,16 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class TargetHealth : MonoBehaviour
 {
+    [FormerlySerializedAs("_shakeDuration")]
+    [SerializeField] private float shakeDuration = 0.2f;
+    [FormerlySerializedAs("_shakeMagnitude")]
+    [SerializeField] private float shakeMagnitude = 0.1f;
+
     private BulletManager _bulletManager;
-    private Collider _collider;
-    private float _shakeDuration = 0.2f;
-    private float _shakeMagnitude = 0.1f;  // Fixed missing semicolon
 
     private void Awake()
     {
-        _collider = GetComponent<Collider>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
     }
 
@@ -33,14 +35,14 @@ public class TargetHealth : MonoBehaviour
     private IEnumerator Shake()
     {
         // Store the original local position of the target
-        Vector3 originalPosition = transform.localPosition;
-        float elapsed = 0.0f;
+        var originalPosition = transform.localPosition;
+        var elapsed = 0.0f;
 
-        while (elapsed < _shakeDuration)
+        while (elapsed < shakeDuration)
         {
             // Calculate random offset within the shake magnitude and add to original position
-            float x = Random.Range(-1f, 1f) * _shakeMagnitude;
-            float y = Random.Range(-1f, 1f) * _shakeMagnitude;
+            var x = Random.Range(-1f, 1f) * shakeMagnitude;
+            var y = Random.Range(-1f, 1f) * shakeMagnitude;
             transform.localPosition = originalPosition + new Vector3(x, y, 0);
 
             elapsed += Time.deltaTime;
