@@ -566,6 +566,8 @@ MonoBehaviour:
   loseSound: {fileID: 8300000, guid: fe40b390e86254ce6ae6a61337d53434, type: 3}
   winScreen: {fileID: 1432392622}
   loseScreen: {fileID: 707711632}
+  multiPlayerLevel: 0
+  winText: {fileID: 1103948546}
 --- !u!114 &426324414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,7 +711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.2419128, y: 3.5663147}
+  m_AnchoredPosition: {x: -1.2419434, y: 3.5663147}
   m_SizeDelta: {x: 296.2856, y: 187.3314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &707711634
@@ -1285,25 +1287,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1772345848906088485, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: canShoot
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1772345848906088485, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: bulletManager
-      value: 
-      objectReference: {fileID: 426324414}
-    - target: {fileID: 1772345848906088485, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: radialProgressBar
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2630892493051580561, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6084052408004074302, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: m_DefaultActionMap
-      value: Player 2
       objectReference: {fileID: 0}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1385,7 +1371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.2419128, y: 3.5663147}
+  m_AnchoredPosition: {x: -1.2419434, y: 3.5663147}
   m_SizeDelta: {x: 296.2856, y: 187.3314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1432392624
@@ -1544,10 +1530,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 2941735379314600268, guid: 33de6844750ee994ab8fb4c1700ab5c0, type: 3}
-      propertyPath: bulletManager
-      value: 
-      objectReference: {fileID: 426324414}
     - target: {fileID: 8020862188241307054, guid: 33de6844750ee994ab8fb4c1700ab5c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
