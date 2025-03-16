@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 123863140}
   - component: {fileID: 123863139}
   m_Layer: 5
-  m_Name: Score1 Background
+  m_Name: Score2 Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,7 +1064,7 @@ GameObject:
   - component: {fileID: 853976063}
   - component: {fileID: 853976062}
   m_Layer: 5
-  m_Name: Score1
+  m_Name: Score2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1122,7 +1122,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 1:'
+  m_Text: 'Player 2:'
 --- !u!222 &853976063
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2978,8 +2978,8 @@ MonoBehaviour:
   player1Score: 0
   player2Score: 0
   scoreToWin: 7
-  player1ScoreText: {fileID: 853976062}
-  player2ScoreText: {fileID: 1836487255}
+  player1ScoreText: {fileID: 1836487255}
+  player2ScoreText: {fileID: 853976062}
   audioSource: {fileID: 1591725795}
   winSound: {fileID: 8300000, guid: 9d4fef6cdb42e43658922829815fa946, type: 3}
   loseSound: {fileID: 8300000, guid: fe40b390e86254ce6ae6a61337d53434, type: 3}
@@ -3001,6 +3001,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3217884554533520243, guid: 865b3be940ff5ea459256a992807513e, type: 3}
   shootingEnabled: 1
+  _audioSource: {fileID: 1591725795}
+  _hitSound: {fileID: 8300000, guid: 227aeb7b6d1e74843b49618c8c342abe, type: 3}
 --- !u!4 &1591725800
 Transform:
   m_ObjectHideFlags: 0
@@ -5181,7 +5183,7 @@ GameObject:
   - component: {fileID: 1836487256}
   - component: {fileID: 1836487255}
   m_Layer: 5
-  m_Name: Score2
+  m_Name: Score1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5239,7 +5241,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 2:'
+  m_Text: 'Player 1:'
 --- !u!222 &1836487256
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5260,7 +5262,7 @@ GameObject:
   - component: {fileID: 1974376724}
   - component: {fileID: 1974376723}
   m_Layer: 5
-  m_Name: Score2 Background
+  m_Name: Score1 Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
