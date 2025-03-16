@@ -31,9 +31,9 @@ public class GameManager : MonoBehaviour
     }
 
     // Reloads the current scene
-    private void ResetScene()
+    private static void ResetScene()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
+        var currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
 }
