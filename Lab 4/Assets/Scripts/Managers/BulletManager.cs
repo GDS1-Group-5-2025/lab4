@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
+    [SerializeField] private GameObject bulletPrefab;
+
     public bool shootingEnabled = true;
     public GameObject bulletPrefab;
     [SerializeField] private AudioSource _audioSource;
@@ -36,5 +39,5 @@ public class BulletManager : MonoBehaviour
             Destroy(bullet);
         }
         _bullets.Clear();
-    }   
+    }
 }

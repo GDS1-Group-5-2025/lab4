@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour, IMovement
 {
+    private static readonly int Speed = Animator.StringToHash("Speed");
+
     [Header("Movement Settings")]
     public float speed;
 
@@ -14,7 +16,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private InputActionMap _playerActionMap;
     private Animator _animator;
 
-    void Start()
+    private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
@@ -24,14 +26,14 @@ public class PlayerMovement : MonoBehaviour, IMovement
         _playerActionMap = _playerInput.currentActionMap;
     }
 
-    void Update()
+    private void Update()
     {
         // Preserving x-component in case rb x-location is not frozen
         _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _movementInput * speed);
 
-        if (_animator != null)
+        if (_animator)
         {
-            _animator.SetFloat("Speed", Mathf.Abs(_movementInput * speed));
+            _animator.SetFloat(Speed, Mathf.Abs(_movementInput * speed));
         }
     }
 
