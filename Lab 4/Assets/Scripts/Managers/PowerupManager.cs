@@ -77,7 +77,6 @@ public class PowerupManager : MonoBehaviour
         {
             // check scores
             var winningPlayer = ScoreManager.Instance.GetWinningPlayer();
-            Debug.Log("ChooseSide A");
             _currentPlayerTauntedIndex = winningPlayer switch
             {
                 0 => Random.Range(0, players.Length),
@@ -88,14 +87,12 @@ public class PowerupManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("ChooseSide B");
             _currentPlayerTauntedIndex = 0;
         }
     }
 
     private void SpawnPowerup()
     {
-        Debug.Log("SpawnPowerup " + _currentPlayerTauntedIndex);
         var player = players[_currentPlayerTauntedIndex];
 
         // Find out if the player is closer to the top or the bottom of the screen
@@ -127,14 +124,12 @@ public class PowerupManager : MonoBehaviour
         _timeUntilNextPowerupSpawn = float.MaxValue;
         // powerup picked up by player
         _activePowerupIndex = _currentPlayerTauntedIndex;
-        Debug.Log("PowerupPickedUp A " + _activePowerupIndex);
         // apply powerup effect
         players[_activePowerupIndex].enabled = true;
         // remove powerup from scene
         Destroy(_powerupPickup);
         // clear variables
         _powerupPickup = null;
-        Debug.Log("PowerupPickedUp B");
         _currentPlayerTauntedIndex = -1;
     }
 
@@ -160,7 +155,6 @@ public class PowerupManager : MonoBehaviour
         // remove powerup from scene
         Destroy(_powerupPickup);
         // switch sides
-        Debug.Log("PowerupExpired");
         _currentPlayerTauntedIndex = _currentPlayerTauntedIndex == 0 ? 1 : 0;
         // clear variables
         _powerupPickup = null;
@@ -176,7 +170,6 @@ public class PowerupManager : MonoBehaviour
         _activePowerupIndex = -1;
         Destroy(_powerupPickup);
         _powerupPickup = null;
-        Debug.Log("Reset");
         _currentPlayerTauntedIndex = -1;
         _timeSinceLastPowerup = 0f;
         _initialPowerupSpawned = false;
