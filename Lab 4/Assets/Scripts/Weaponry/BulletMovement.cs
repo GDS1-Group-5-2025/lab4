@@ -4,11 +4,19 @@ public class BulletMovement : MonoBehaviour
 {
     private bool hasHitWall = false;
     private Rigidbody2D _rb;
+    private BulletManager _bulletManager;
+
     public float power = 10f;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+
+        _bulletManager = FindFirstObjectByType<BulletManager>();
+        if (_bulletManager == null)
+        {
+            Debug.LogWarning("BulletManager not found in scene!");
+        }
         // Initial force
         _rb.AddForce(transform.up * power, ForceMode2D.Impulse);
     }
@@ -25,7 +33,11 @@ public class BulletMovement : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if(other.gameObject.CompareTag("Wall") && !hasHitWall){ hasHitWall = true; }
+        if (_bulletManager != null)
+        {
+            _bulletManager.PlayHitSound();
+        }
+        if (other.gameObject.CompareTag("Wall") && !hasHitWall){ hasHitWall = true; }
         else{ Destroy(this.gameObject); }
     }
 }

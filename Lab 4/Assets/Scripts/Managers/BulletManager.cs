@@ -5,7 +5,20 @@ public class BulletManager : MonoBehaviour
 {
     public bool shootingEnabled = true;
     public GameObject bulletPrefab;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _hitSound;
+
     private readonly List<GameObject> _bullets = new List<GameObject>();
+
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlayHitSound()
+    {
+        _audioSource.PlayOneShot(_hitSound);
+    }
 
     public void Shoot(Vector3 from, Quaternion at)
     {
