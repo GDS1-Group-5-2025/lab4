@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7719453950631508872}
   - component: {fileID: -3430913660877681811}
   - component: {fileID: 7842349293854970528}
-  - component: {fileID: 845550574996993900}
+  - component: {fileID: 9215004629959586536}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6618087505925039419, guid: 34756c6c810002d45bc6a9ddc9c71dc8, type: 3}
+  m_Sprite: {fileID: -4234516185379006357, guid: a036e1a49ed4db045a7fa8da1c7dfe07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -149,7 +149,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &845550574996993900
+--- !u!58 &9215004629959586536
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,8 +183,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.000000029802322}
-  m_Radius: 0.4503496
+  m_Offset: {x: -0.0072692633, y: 0.018172503}
+  m_Radius: 0.464368
 --- !u!1 &9223016772320156017
 GameObject:
   m_ObjectHideFlags: 0
