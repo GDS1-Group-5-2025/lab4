@@ -797,29 +797,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1772345848906088485, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: canShoot
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1772345848906088485, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: bulletManager
       value: 
       objectReference: {fileID: 1215558823}
-    - target: {fileID: 1772345848906088485, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: radialProgressBar
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2630892493051580561, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6084052408004074302, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: m_DefaultActionMap
-      value: Player 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716248227318133498, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 84a400912638a264b8487655131e9ff6, type: 2}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.1
@@ -1815,6 +1799,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6200372873269376078, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5401634907953763043, guid: 34756c6c810002d45bc6a9ddc9c71dc8, type: 3}
     - target: {fileID: 7781428539471581321, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -2101,9 +2089,9 @@ SceneRoots:
   - {fileID: 1355287457}
   - {fileID: 1332490135}
   - {fileID: 958752705}
+  - {fileID: 1944836592}
   - {fileID: 1172143135}
   - {fileID: 1219110168}
   - {fileID: 1215558824}
   - {fileID: 237877912}
   - {fileID: 549328667}
-  - {fileID: 1944836592}
