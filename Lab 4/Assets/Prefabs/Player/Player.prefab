@@ -595,7 +595,7 @@ MonoBehaviour:
     m_ActionName: 'Player 1/ShootP1[/Keyboard/rightShift]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player 2
+  m_DefaultActionMap: Player 1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!95 &7716248227318133498
