@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField] private GameObject winScreen;
     [SerializeField] private GameObject loseScreen;
+
+    [SerializeField] private bool multiPlayerLevel = false;
+    [SerializeField] private TextMeshProUGUI winText;
 
     private void Awake()
     {
@@ -118,6 +122,7 @@ public class ScoreManager : MonoBehaviour
         else
         {
             winningPlayer = 0;
+            ShowEndScreen(loseScreen, loseSound);
             Debug.Log("It's a tie!");
         }
         EndGame();
@@ -125,6 +130,18 @@ public class ScoreManager : MonoBehaviour
     private void ShowEndScreen(GameObject screen, AudioClip sound)
     {
         HideWinLoseScreens();
+        if (multiPlayerLevel)
+        {
+            if (winningPlayer == 0)
+            {
+                winText.text = "DRAW!";
+            }
+            else
+            {
+                winText.text = "PLAYER " + winningPlayer + " WINS!";
+            }
+            winScreen.SetActive(true);
+        }
         if (screen != null)
         {
             screen.SetActive(true);
