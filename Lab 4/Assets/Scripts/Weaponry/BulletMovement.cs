@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
+    private bool hasHitWall = false;
     private Rigidbody2D _rb;
     public float power = 10f;
 
@@ -21,5 +22,10 @@ public class BulletMovement : MonoBehaviour
 
         // Apply rotation
         transform.rotation = Quaternion.Euler(0, 0, angle-90);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Wall") && !hasHitWall){ hasHitWall = true; }
+        else{ Destroy(this.gameObject); }
     }
 }

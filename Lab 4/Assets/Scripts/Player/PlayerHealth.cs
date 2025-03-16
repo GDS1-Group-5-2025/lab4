@@ -1,28 +1,35 @@
 using UnityEngine;
+using System;
+using System.Collections;
 using UnityEngine.UIElements;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
+    // Event so that other classes can subscribe to the player dying
+    public static event Action OnAnyPlayerDied;
+
     [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
     [SerializeField] private GameObject weapon;
     [SerializeField] private bool targetMode = false;
  
-    private int _currentLives;
+    [SerializeField] private int _currentLives;
     private bool _isInvincible = false;
 
+    private IMovement _movement;
+
     private Collider2D _collider;
-    private PlayerMovement _playerMovement;
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
     private SpriteRenderer _spriteRenderer;
+    public float invincibilityDuration = 2f;
 
     private void Awake()
     {
         _collider = GetComponent<Collider2D>();
-        _playerMovement = GetComponent<PlayerMovement>();
+        _movement = GetComponent<IMovement>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -45,7 +52,6 @@ public class PlayerHealth : MonoBehaviour
             {
                 TakeDamage(1);
             }
-            collision.gameObject.SetActive(false);
         }
     }
 
@@ -73,23 +79,46 @@ public class PlayerHealth : MonoBehaviour
         //Change Score
         ScoreManager.Instance.IncrementScoreForOppositionOf(playerNumber);
 
+        OnAnyPlayerDied?.Invoke();
 
         // Disable movement
-        if (_playerMovement )
-            _playerMovement.enabled = false;
-
-        // Disable shooting and aiming
-        if (weapon)
-            weapon.SetActive(false);
-        _bulletManager.shootingEnabled = false;
+        if (_movement != null)
+            _movement.enabled = false;
 
         // Disable the collider
         _collider.enabled = false;
 
         // Play death animation
 
-        // Respawn after 2 seconds
-        Invoke("Respawn", 2f);
+        // Disable shooting and aiming
+        _bulletManager.shootingEnabled = false;
+        DisableShootingForSeconds(2f);
+
+        //Respawn after 2 seconds
+        Invoke(nameof(Respawn), 2f);
+    }
+
+    private void DisableShootingForSeconds(float duration)
+    {
+        var shootingScripts = GetComponentsInChildren<BaseShooting>(true);
+        foreach (var shooter in shootingScripts)
+        {
+            shooter.canShoot = false;
+        }
+
+        // Start a coroutine, which remains enabled
+        StartCoroutine(EnableShootingAfter(duration));
+    }
+
+    private IEnumerator EnableShootingAfter(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        var shootingScripts = GetComponentsInChildren<BaseShooting>(true);
+        foreach (var shooter in shootingScripts)
+        {
+            shooter.canShoot = true;
+        }
     }
 
     private void Respawn()
@@ -104,8 +133,8 @@ public class PlayerHealth : MonoBehaviour
         _currentLives = startingLives;
 
         // Re-enable movement
-        if (_playerMovement )
-            _playerMovement.enabled = true;
+        if (_movement != null)
+            _movement.enabled = true;
 
         // Re-enable shooting
         if (weapon)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AIMovement : MonoBehaviour
+public class AIMovement : MonoBehaviour, IMovement
 {
     [SerializeField] private Vector2 startPos;
     [SerializeField] private float speed;
@@ -20,5 +20,12 @@ public class AIMovement : MonoBehaviour
             destY = Random.Range(lowerBound, upperBound);
         }
         this.transform.position = Vector2.MoveTowards(this.transform.position, new Vector2(startPos.x, destY), speed*Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.CompareTag("Wall")){
+            if(this.transform.position.y < other.transform.position.y){ destY = upperBound = this.transform.position.y; }
+            else if(this.transform.position.y > other.transform.position.y){ destY = lowerBound = this.transform.position.y; }
+        }
     }
 }
