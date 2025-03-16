@@ -104,6 +104,23 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    public int GetWinningPlayer()
+    {
+        if (player1Score > player2Score)
+        {
+            winningPlayer = 1;
+        }
+        else if (player2Score > player1Score)
+        {
+            winningPlayer = 2;
+        }
+        else
+        {
+            winningPlayer = 0;
+        }
+        return winningPlayer;
+    }
+
     //Called when time runs out
     public void CheckWhoHasMostPoints()
     {
