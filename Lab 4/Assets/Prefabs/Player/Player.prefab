@@ -327,7 +327,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6490723321153794239, guid: c413a328b1ea60448949ef64510c787b, type: 3}
+  m_Sprite: {fileID: -4234516185379006357, guid: a036e1a49ed4db045a7fa8da1c7dfe07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
   playerNumber: 1
   startingLives: 2
   weapon: {fileID: 1197917127193174309}
-  targetMode: 0
+  targetMode: 1
   _currentLives: 0
   invincibilityDuration: 2
 --- !u!114 &8772702121365958500
@@ -595,7 +595,7 @@ MonoBehaviour:
     m_ActionName: 'Player 1/ShootP1[/Keyboard/rightShift]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player 2
+  m_DefaultActionMap: Player 1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!95 &7716248227318133498
@@ -608,7 +608,7 @@ Animator:
   m_GameObject: {fileID: 2630892493051580561}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: a93a4020d249b0c4da38381ac124ad50, type: 2}
+  m_Controller: {fileID: 9100000, guid: 84a400912638a264b8487655131e9ff6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

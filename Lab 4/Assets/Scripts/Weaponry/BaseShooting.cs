@@ -56,7 +56,7 @@ public abstract class BaseShooting : MonoBehaviour
 
     protected void AttemptShoot(Vector2 spawnPos, Quaternion spawnRotation)
     {
-        // Don’t shoot if already reloading
+        // Donâ€™t shoot if already reloading
         if (_isReloading)
         {
             if (emptyGunSound != null)
