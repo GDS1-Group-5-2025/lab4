@@ -25,7 +25,10 @@ public class PlayerShooting : BaseShooting
         // Set initial bullet count
         _bullets = bulletCount;
         // progress bar set to 0
-        radialProgressBar.fillAmount = 0f;
+        if (radialProgressBar != null)
+        {
+            radialProgressBar.fillAmount = 0f;
+        }
     }
 
     protected override void OnEnable()
@@ -36,7 +39,11 @@ public class PlayerShooting : BaseShooting
             // Update progress bar
             _timeSinceReloadStart += Time.deltaTime;
             float progress = _timeSinceReloadStart / reloadTime;
-            radialProgressBar.fillAmount = progress;
+
+            if (radialProgressBar != null)
+            {
+                radialProgressBar.fillAmount = progress;
+            }
             // If reload time has passed
             if (_timeSinceReloadStart >= reloadTime)
             {
@@ -45,7 +52,12 @@ public class PlayerShooting : BaseShooting
                 _isReloading = false;
                 _audioSource.PlayOneShot(reloadSound);
                 loadingImage.SetActive(false);
-                radialProgressBar.fillAmount = 0f;
+
+                if (radialProgressBar != null)
+                {        
+                    radialProgressBar.fillAmount = 0f;
+                }
+
                 InputAction shootAction = _playerActionMap.FindAction("Shoot");
                 if (shootAction != null)
                 {
@@ -71,7 +83,7 @@ public class PlayerShooting : BaseShooting
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
-        Debug.Log(canShoot);
+        //Debug.Log(canShoot);
         if (!canShoot) return;
         if (!ctx.performed) return;
 
