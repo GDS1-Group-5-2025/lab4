@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
+    [SerializeField] private GameObject bulletPrefab;
+
     public bool shootingEnabled = true;
-    public GameObject bulletPrefab;
     private readonly List<GameObject> _bullets = new List<GameObject>();
 
     public void Shoot(Vector3 from, Quaternion at)
@@ -23,5 +25,5 @@ public class BulletManager : MonoBehaviour
             Destroy(bullet);
         }
         _bullets.Clear();
-    }   
+    }
 }

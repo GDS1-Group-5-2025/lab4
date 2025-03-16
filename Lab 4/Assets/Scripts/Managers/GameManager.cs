@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,22 +12,28 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        // Unsubscribe to prevent memory leaks or unexpected behavior.
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.OnGameEnded -= HandleGameEnded;
     }
 
-    //Game Ends
+    // Called when the game ends
     private void HandleGameEnded(int winningPlayer)
     {
-        Debug.Log($"Game Over! Winning player: {winningPlayer}. Reloading scene...");
+        Debug.Log($"Game Over! Winning player: {winningPlayer}. Reloading scene in 3 seconds...");
+        StartCoroutine(DelayedReset());
+    }
+
+    // Coroutine that waits 3 seconds before reloading the scene
+    private IEnumerator DelayedReset()
+    {
+        yield return new WaitForSeconds(3f);
         ResetScene();
     }
 
-    //Reloads scene
-    private void ResetScene()
+    // Reloads the current scene
+    private static void ResetScene()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
+        var currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
 }

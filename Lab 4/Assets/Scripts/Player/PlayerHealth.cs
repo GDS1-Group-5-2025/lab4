@@ -1,33 +1,33 @@
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using System.Collections;
-using UnityEngine.UIElements;
-using System.Collections;
+using UnityEngine.Serialization;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private static readonly int IsOneLife = Animator.StringToHash("IsOneLife");
+    private static readonly int Dead = Animator.StringToHash("Dead");
     // Event so that other classes can subscribe to the player dying
     public static event Action OnAnyPlayerDied;
 
     [SerializeField] private int playerNumber = 1;
     [SerializeField] private int startingLives = 2;
     [SerializeField] private GameObject weapon;
-    [SerializeField] private bool targetMode = false;
- 
-    [SerializeField] private int _currentLives;
-    private bool _isInvincible = false;
+    [SerializeField] private bool targetMode;
+
+    [FormerlySerializedAs("_currentLives")]
+    [SerializeField] private int currentLives;
+    private bool _isInvincible;
 
     private IMovement _movement;
 
+    private PlayerPowerup _playerPowerup;
     private Collider2D _collider;
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    public float invincibilityDuration = 2f;
 
     private void Awake()
     {
@@ -36,15 +36,16 @@ public class PlayerHealth : MonoBehaviour
         _bulletManager = FindFirstObjectByType<BulletManager>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _playerPowerup = GetComponentInChildren<PlayerPowerup>();
     }
 
     private void Start()
     {
-        _currentLives = startingLives;
+        currentLives = startingLives;
         _startingPosition = transform.position;
         _startingRotation = transform.rotation;
 
-        if (_animator != null)
+        if (_animator)
         {
             _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
             _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
@@ -53,7 +54,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        if (_animator.GetBool("IsOneLife")){
+        if (_animator.GetBool(IsOneLife))
+        {
             _animator.SetLayerWeight(0, 1);
             _animator.SetLayerWeight(1, 0);
         }
@@ -68,7 +70,8 @@ public class PlayerHealth : MonoBehaviour
     {
         // Only respond if we collided with a "Bullet"
         if (_isInvincible)
-        return;
+            return;
+
         if (collision.gameObject.CompareTag("Bullet"))
         {
             if (!targetMode)
@@ -80,21 +83,27 @@ public class PlayerHealth : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        _currentLives -= damage;      
+        // if has powerup, clear it
+        if (_playerPowerup && _playerPowerup.enabled)
+        {
+            _playerPowerup.TakeDamage();
+        }
 
-        switch (_currentLives)
+        currentLives -= damage;
+
+        switch (currentLives)
         {
             case 1:
                 Debug.Log("Player has lost a life");
                 // Remove the player's hat here
                 if (_animator != null)
                 {
-                    _animator.SetBool("IsOneLife", true);
-                    Debug.Log(_animator.GetBool("IsOneLife"));
+                    _animator.SetBool(IsOneLife, true);
+                    Debug.Log(_animator.GetBool(IsOneLife));
                 }
                 break;
             case <= 0:
-                _animator.SetTrigger("Dead");
+                _animator.SetTrigger(Dead);
                 _bulletManager.ClearBullets();
                 PlayerDeath();
                 Debug.Log("Player has died");
@@ -159,8 +168,8 @@ public class PlayerHealth : MonoBehaviour
         transform.rotation = _startingRotation;
 
         // Reset lives
-        _currentLives = startingLives;
-        _animator.SetBool("IsOneLife", false);
+        currentLives = startingLives;
+        _animator.SetBool(IsOneLife, false);
 
         // Re-enable movement
         if (_movement != null)
@@ -175,7 +184,7 @@ public class PlayerHealth : MonoBehaviour
         _collider.enabled = true;
 
         // Restore hat + Reset animator layers
- 
+
         if (_animator != null)
         {
             _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
@@ -188,7 +197,7 @@ public class PlayerHealth : MonoBehaviour
         _collider.enabled = false;
 
         StartCoroutine(InvincibilityFlash());
-        Invoke("RemoveInvincibility", 2f); 
+        Invoke(nameof(RemoveInvincibility), 2f);
         GetComponent<PlayerShooting>()?.DisableShooting(2f);
     }
     private void RemoveInvincibility()
@@ -196,17 +205,17 @@ public class PlayerHealth : MonoBehaviour
         _isInvincible = false;
         _collider.enabled = true;
         StopCoroutine(InvincibilityFlash());
-        _spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
+        _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
         Debug.Log("Player is now vulnerable again.");
     }
     private IEnumerator InvincibilityFlash()
     {
         while (_isInvincible)
         {
-            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.3f); 
-            yield return new WaitForSeconds (0.2f);
-            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.7f); 
-            yield return new WaitForSeconds (0.2f);
+            _spriteRenderer.color = new Color(1f, 1f, 1f, 0.3f);
+            yield return new WaitForSeconds(0.2f);
+            _spriteRenderer.color = new Color(1f, 1f, 1f, 0.7f);
+            yield return new WaitForSeconds(0.2f);
         }
 
     }
