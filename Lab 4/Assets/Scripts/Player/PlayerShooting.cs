@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PlayerShooting : BaseShooting
 {
-    private static readonly int Shoot1 = Animator.StringToHash("Shoot");
     public Image radialProgressBar;
 
     private PlayerInput _playerInput;
