@@ -622,6 +622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3217884554533520243, guid: 865b3be940ff5ea459256a992807513e, type: 3}
   shootingEnabled: 1
+  _audioSource: {fileID: 483647252}
+  _hitSound: {fileID: 8300000, guid: 227aeb7b6d1e74843b49618c8c342abe, type: 3}
 --- !u!4 &483647251
 Transform:
   m_ObjectHideFlags: 0
@@ -775,8 +777,8 @@ MonoBehaviour:
   player1Score: 0
   player2Score: 0
   scoreToWin: 7
-  player1ScoreText: {fileID: 1935732059}
-  player2ScoreText: {fileID: 1336177202}
+  player1ScoreText: {fileID: 1336177202}
+  player2ScoreText: {fileID: 1935732059}
   audioSource: {fileID: 483647252}
   winSound: {fileID: 8300000, guid: 9d4fef6cdb42e43658922829815fa946, type: 3}
   loseSound: {fileID: 8300000, guid: fe40b390e86254ce6ae6a61337d53434, type: 3}
@@ -3132,7 +3134,7 @@ GameObject:
   - component: {fileID: 946184070}
   - component: {fileID: 946184069}
   m_Layer: 5
-  m_Name: Score2 Background
+  m_Name: Score1 Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3615,7 +3617,7 @@ GameObject:
   - component: {fileID: 1336177203}
   - component: {fileID: 1336177202}
   m_Layer: 5
-  m_Name: Score2
+  m_Name: Score1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3654,7 +3656,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 2:'
+  m_Text: 'Player 1:'
 --- !u!222 &1336177203
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4871,7 +4873,7 @@ GameObject:
   - component: {fileID: 1847642424}
   - component: {fileID: 1847642423}
   m_Layer: 5
-  m_Name: Score1 Background
+  m_Name: Score2 Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5004,7 +5006,7 @@ GameObject:
   - component: {fileID: 1935732060}
   - component: {fileID: 1935732059}
   m_Layer: 5
-  m_Name: Score1
+  m_Name: Score2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5043,7 +5045,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player 1:'
+  m_Text: 'Player 2:'
 --- !u!222 &1935732060
 CanvasRenderer:
   m_ObjectHideFlags: 0
