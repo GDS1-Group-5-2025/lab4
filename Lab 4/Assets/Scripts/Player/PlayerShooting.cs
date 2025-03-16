@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerShooting : BaseShooting
 {
+
+    public Image radialProgressBar;
+
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
 
     private int _bullets;
-    private float _timeSinceLastShot;
-    private bool _isReloading;
-    private float _timeSinceReloadStart;
     private bool _shootingDisabled = false;
 
     protected override void Start()
@@ -19,6 +19,11 @@ public class PlayerShooting : BaseShooting
 
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerActionMap = _playerInput.currentActionMap;
+
+        // Set initial bullet count
+        _bullets = bulletCount;
+        // progress bar set to 0
+        radialProgressBar.fillAmount = 0f;
     }
 
     protected override void OnEnable()
@@ -26,10 +31,24 @@ public class PlayerShooting : BaseShooting
         base.OnEnable();
         if (_playerActionMap != null)
         {
-            InputAction shootAction = _playerActionMap.FindAction("Shoot");
-            if (shootAction != null)
+            // Update progress bar
+            _timeSinceReloadStart += Time.deltaTime;
+            float progress = _timeSinceReloadStart / reloadTime;
+            radialProgressBar.fillAmount = progress;
+            // If reload time has passed
+            if (_timeSinceReloadStart >= reloadTime)
             {
-                shootAction.performed += Shoot;
+                // Reset bullets, progress bar and reload flag
+                _bullets = bulletCount;
+                _isReloading = false;
+                _audioSource.PlayOneShot(reloadSound);
+                loadingImage.SetActive(false);
+                radialProgressBar.fillAmount = 0f;
+                InputAction shootAction = _playerActionMap.FindAction("Shoot");
+                if (shootAction != null)
+                {
+                    shootAction.performed += Shoot;
+                }
             }
         }
     }
