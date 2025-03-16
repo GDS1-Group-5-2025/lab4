@@ -70,7 +70,7 @@ MonoBehaviour:
   emptyGunSound: {fileID: 8300000, guid: 70a76f424e2fc264bbceadfdf6e25357, type: 3}
   loadingImage: {fileID: 1706724725314632350}
   canShoot: 1
-  radialProgressBar: {fileID: 0}
+  radialProgressBar: {fileID: 3256634277646218609}
 --- !u!82 &2427336138790828645
 AudioSource:
   m_ObjectHideFlags: 0
