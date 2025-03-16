@@ -5,25 +5,12 @@ using UnityEngine.UI;
 public class PlayerShooting : BaseShooting
 {
 
-    public int bulletCount = 10;
-    public float fireRate = 0.5f;
-    public float reloadTime = 2f;
-
-    public AudioClip shootSound;
-    public AudioClip reloadSound;
-    public AudioClip emptyGunSound;
-
-    public GameObject loadingImage;
     public Image radialProgressBar;
 
-    private AudioSource _audioSource;
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
 
     private int _bullets;
-    private float _timeSinceLastShot;
-    private bool _isReloading;
-    private float _timeSinceReloadStart;
     private bool _shootingDisabled = false;
 
     protected override void Start()
