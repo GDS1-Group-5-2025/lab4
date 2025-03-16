@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class PlayerShooting : BaseShooting
 {
-    private static readonly int Shoot1 = Animator.StringToHash("Shoot");
     public Image radialProgressBar;
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
+    
     private bool _shootingDisabled = false;
 
     protected override void Start()
