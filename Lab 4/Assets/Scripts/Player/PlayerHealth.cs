@@ -1,7 +1,10 @@
+using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using System.Collections;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -22,6 +25,8 @@ public class PlayerHealth : MonoBehaviour
     private BulletManager _bulletManager;
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
+    private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     public float invincibilityDuration = 2f;
 
     private void Awake()
@@ -29,6 +34,8 @@ public class PlayerHealth : MonoBehaviour
         _collider = GetComponent<Collider2D>();
         _movement = GetComponent<IMovement>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -36,6 +43,25 @@ public class PlayerHealth : MonoBehaviour
         _currentLives = startingLives;
         _startingPosition = transform.position;
         _startingRotation = transform.rotation;
+
+        if (_animator != null)
+        {
+            _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
+            _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
+        }
+    }
+
+    private void Update()
+    {
+        if (_animator.GetBool("IsOneLife")){
+            _animator.SetLayerWeight(0, 1);
+            _animator.SetLayerWeight(1, 0);
+        }
+        else
+        {
+            _animator.SetLayerWeight(1, 1);
+            _animator.SetLayerWeight(0, 0);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -54,15 +80,21 @@ public class PlayerHealth : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
-        _currentLives -= damage;
+        _currentLives -= damage;      
 
         switch (_currentLives)
         {
             case 1:
                 Debug.Log("Player has lost a life");
                 // Remove the player's hat here
+                if (_animator != null)
+                {
+                    _animator.SetBool("IsOneLife", true);
+                    Debug.Log(_animator.GetBool("IsOneLife"));
+                }
                 break;
             case <= 0:
+                _animator.SetTrigger("Dead");
                 _bulletManager.ClearBullets();
                 PlayerDeath();
                 Debug.Log("Player has died");
@@ -128,6 +160,7 @@ public class PlayerHealth : MonoBehaviour
 
         // Reset lives
         _currentLives = startingLives;
+        _animator.SetBool("IsOneLife", false);
 
         // Re-enable movement
         if (_movement != null)
@@ -141,16 +174,40 @@ public class PlayerHealth : MonoBehaviour
         // Re-enable the collider
         _collider.enabled = true;
 
+        // Restore hat + Reset animator layers
+ 
+        if (_animator != null)
+        {
+            _animator.SetLayerWeight(_animator.GetLayerIndex("OneLife"), 0);
+            _animator.SetLayerWeight(_animator.GetLayerIndex("TwoLives"), 1);
+        }
+        _animator.ResetTrigger("Dead");
         // Restore hat
         // Set invincibility
         _isInvincible = true;
         _collider.enabled = false;
-        Invoke("RemoveInvincibility", invincibilityDuration);
+
+        StartCoroutine(InvincibilityFlash());
+        Invoke("RemoveInvincibility", 2f); 
+        GetComponent<PlayerShooting>()?.DisableShooting(2f);
     }
     private void RemoveInvincibility()
     {
         _isInvincible = false;
         _collider.enabled = true;
+        StopCoroutine(InvincibilityFlash());
+        _spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
         Debug.Log("Player is now vulnerable again.");
+    }
+    private IEnumerator InvincibilityFlash()
+    {
+        while (_isInvincible)
+        {
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.3f); 
+            yield return new WaitForSeconds (0.2f);
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.7f); 
+            yield return new WaitForSeconds (0.2f);
+        }
+
     }
 }
