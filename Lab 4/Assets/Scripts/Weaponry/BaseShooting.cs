@@ -139,7 +139,7 @@ public abstract class BaseShooting : MonoBehaviour
         _currentBullets = bulletCount;
         _timeSinceReloadStart = 0f;
 
-        if (reloadSound != null && !_audioSource.isPlaying)
+        if (reloadSound != null)
             _audioSource.PlayOneShot(reloadSound);
 
         if (loadingImage != null)
