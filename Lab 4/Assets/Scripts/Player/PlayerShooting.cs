@@ -8,9 +8,6 @@ public class PlayerShooting : BaseShooting
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
-    private Animator _animator;
-
-    // We don’t need a separate _bullets here because BaseShooting already uses _currentBullets
     private bool _shootingDisabled = false;
 
     protected override void Start()
@@ -19,8 +16,6 @@ public class PlayerShooting : BaseShooting
 
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerActionMap = _playerInput.currentActionMap;
-
-        _animator = GetComponentInParent<Animator>();
 
         // Initialize progress bar
         if (radialProgressBar != null)
@@ -31,7 +26,6 @@ public class PlayerShooting : BaseShooting
 
     protected override void Update()
     {
-        // Always call base.Update() so reloading and fire-rate logic work properly
         base.Update();
 
         // Update radial progress bar if reloading
@@ -74,7 +68,7 @@ public class PlayerShooting : BaseShooting
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
-        if (!canShoot || !ctx.performed) return;
+        if (!ctx.performed) return;
 
         if (_shootingDisabled)
         {
@@ -88,12 +82,6 @@ public class PlayerShooting : BaseShooting
             if (emptyGunSound != null)
                 _audioSource.PlayOneShot(emptyGunSound);
             return;
-        }
-
-        // Animate shoot
-        if (_animator != null && !_isReloading)
-        {
-            _animator.SetTrigger("Shoot");
         }
 
         // Attempt to fire using base logic

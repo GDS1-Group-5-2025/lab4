@@ -25,10 +25,14 @@ public abstract class BaseShooting : MonoBehaviour
 
     public bool canShoot = true;
 
+    protected Animator _animator;
+
     protected virtual void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         bulletManager = FindFirstObjectByType<BulletManager>();
+
+        _animator = GetComponentInParent<Animator>();
 
         // Initialize bullets and hide loading image
         _currentBullets = bulletCount;
@@ -70,6 +74,12 @@ public abstract class BaseShooting : MonoBehaviour
         // If we have bullets left, shoot
         if (_currentBullets > 0)
         {
+            // Animation trigger
+            if (_animator != null && !_isReloading)
+            {
+                _animator.SetTrigger("Shoot");
+            }
+
             ShootImplementation(spawnPos, spawnRotation);
             _currentBullets--;
             _timeSinceLastShot = 0f;
