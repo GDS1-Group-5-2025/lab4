@@ -52,6 +52,14 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    private void UpdateScoreUITarget()
+    {
+        if (player1ScoreText != null)
+        {
+            player1ScoreText.text = "Score: " + player1Score.ToString();
+        }
+    }
+
     public void IncrementScoreForOppositionOf(int player)
     {
         //Called by player when they take damage
@@ -70,6 +78,7 @@ public class ScoreManager : MonoBehaviour
     public void IncrementScoreForTarget()
     {
         player1Score++;
+        UpdateScoreUITarget();
     }
 
     private void CheckWinConditionFirstToReachScore()

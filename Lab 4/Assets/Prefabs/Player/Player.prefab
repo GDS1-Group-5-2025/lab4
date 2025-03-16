@@ -64,10 +64,13 @@ MonoBehaviour:
   bulletCount: 4
   fireRate: 2
   reloadTime: 4
+  bulletManager: {fileID: 0}
   shootSound: {fileID: 8300000, guid: 3a9c1d80a11abaf4d8e645a2e4161816, type: 3}
   reloadSound: {fileID: 8300000, guid: 0d980ec45eedfb94bbb9ed9b0f145184, type: 3}
   emptyGunSound: {fileID: 8300000, guid: 70a76f424e2fc264bbceadfdf6e25357, type: 3}
   loadingImage: {fileID: 8705603805077847125}
+  canShoot: 1
+  radialProgressBar: {fileID: 0}
 --- !u!82 &2427336138790828645
 AudioSource:
   m_ObjectHideFlags: 0
@@ -180,6 +183,7 @@ GameObject:
   - component: {fileID: 263754236584806813}
   - component: {fileID: 8772702121365958500}
   - component: {fileID: 6084052408004074302}
+  - component: {fileID: 7716248227318133498}
   - component: {fileID: 5240135001543240379}
   - component: {fileID: 615852910682835312}
   m_Layer: 0
@@ -250,9 +254,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -6490723321153794239, guid: c413a328b1ea60448949ef64510c787b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -339,6 +343,9 @@ MonoBehaviour:
   playerNumber: 1
   startingLives: 2
   weapon: {fileID: 1197917127193174309}
+  targetMode: 0
+  _currentLives: 0
+  invincibilityDuration: 2
 --- !u!114 &8772702121365958500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,6 +525,28 @@ MonoBehaviour:
   m_DefaultActionMap: Player 1
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &7716248227318133498
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2630892493051580561}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: a93a4020d249b0c4da38381ac124ad50, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5240135001543240379
 MonoBehaviour:
   m_ObjectHideFlags: 0
