@@ -8,7 +8,8 @@ public class PlayerShooting : BaseShooting
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
-    private bool _shootingDisabled;
+    
+    private bool _shootingDisabled = false;
 
     protected override void Start()
     {

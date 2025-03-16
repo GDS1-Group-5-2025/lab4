@@ -63,8 +63,10 @@ public abstract class BaseShooting : MonoBehaviour
         // Don’t shoot if already reloading
         if (isReloading)
         {
-            if (emptyGunSound)
+            if (emptyGunSound) 
+            {
                 audioSource.PlayOneShot(emptyGunSound);
+            }
             return;
         }
 
