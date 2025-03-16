@@ -9,6 +9,7 @@ public class PlayerShooting : BaseShooting
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
+    private Animator _animator;
 
     private int _bullets;
     private bool _shootingDisabled = false;
@@ -20,6 +21,7 @@ public class PlayerShooting : BaseShooting
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerActionMap = _playerInput.currentActionMap;
 
+        _animator = GetComponentInParent<Animator>();
         // Set initial bullet count
         _bullets = bulletCount;
         // progress bar set to 0
@@ -87,6 +89,11 @@ public class PlayerShooting : BaseShooting
         }
         Vector2 spawnPos = transform.position + transform.up * 1f;
         Quaternion rotation = transform.rotation;
+
+        if (_animator != null && !_isReloading)
+        {
+            _animator.SetTrigger("Shoot");
+        }
 
         // Attempt to shoot using the base method
         if (ctx.action.actionMap == _playerActionMap)
