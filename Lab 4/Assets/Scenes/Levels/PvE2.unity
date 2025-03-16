@@ -406,7 +406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4450951901491386307, guid: 94f8884b5d022824bb413dc786707b8f, type: 3}
       propertyPath: m_BodyType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5106332853428999689, guid: 94f8884b5d022824bb413dc786707b8f, type: 3}
       propertyPath: m_Name
@@ -620,8 +620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ade5e20608bf54fb8e112f0a12ff15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingEnabled: 1
   bulletPrefab: {fileID: 3217884554533520243, guid: 865b3be940ff5ea459256a992807513e, type: 3}
+  shootingEnabled: 1
 --- !u!4 &483647251
 Transform:
   m_ObjectHideFlags: 0
