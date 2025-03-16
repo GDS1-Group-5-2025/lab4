@@ -264,19 +264,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d070afd523afef4da4a0ae1de4ff8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerupPrefab: {fileID: 0}
-  initialPowerupSpawnTime: 20
+  powerupPrefab: {fileID: 3608645419720021920, guid: 7d87bfc1333f853449c9cbb7dca8d2be, type: 3}
+  initialPowerupSpawnTime: 5
   minSpawnInterval: 10
   maxSpawnInterval: 20
   players:
   - {fileID: 1493193761}
   - {fileID: 1983452979}
-  screenBounds:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +729,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 142935366}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b470ec2da61fb5745ae199c270d500f6, type: 3}
   m_Name: 
@@ -868,7 +862,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 667904498}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b470ec2da61fb5745ae199c270d500f6, type: 3}
   m_Name: 
