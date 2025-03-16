@@ -102,13 +102,13 @@ public class PowerupManager : MonoBehaviour
         var side = Mathf.Sign(position.x);
 
         // Choose position farthest from the player
-        var yMax = Mathf.Sign(position.y) * ((playableBounds.height / 2) + playableBounds.center.y);
+        var y = Mathf.Sign(position.y) * -1 * (playableBounds.height / 2) * .85f;
 
         // Now we spawn the powerup
         var spawnPosition = new Vector3
         {
-            // y 20% away from yMax towards the center
-            y = playableBounds.center.y + (yMax * 0.8f),
+
+            y = playableBounds.center.y + y,
             // x position will be just off the screen, on the side of the player
             x = playableBounds.center.x + (side * (playableBounds.width / 2 + 1)),
         };
