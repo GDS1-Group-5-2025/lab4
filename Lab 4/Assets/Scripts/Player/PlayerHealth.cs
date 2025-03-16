@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using UnityEngine.UIElements;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
     private Vector3 _startingPosition;
     private Quaternion _startingRotation;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     public float invincibilityDuration = 2f;
 
     private void Awake()
@@ -33,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         _movement = GetComponent<IMovement>();
         _bulletManager = FindFirstObjectByType<BulletManager>();
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -183,12 +186,28 @@ public class PlayerHealth : MonoBehaviour
         // Set invincibility
         _isInvincible = true;
         _collider.enabled = false;
-        Invoke("RemoveInvincibility", invincibilityDuration);
+
+        StartCoroutine(InvincibilityFlash());
+        Invoke("RemoveInvincibility", 2f); 
+        GetComponent<PlayerShooting>()?.DisableShooting(2f);
     }
     private void RemoveInvincibility()
     {
         _isInvincible = false;
         _collider.enabled = true;
+        StopCoroutine(InvincibilityFlash());
+        _spriteRenderer.color = new Color (1f, 1f, 1f, 1f);
         Debug.Log("Player is now vulnerable again.");
+    }
+    private IEnumerator InvincibilityFlash()
+    {
+        while (_isInvincible)
+        {
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.3f); 
+            yield return new WaitForSeconds (0.2f);
+            _spriteRenderer.color = new Color (1f, 1f, 1f, 0.7f); 
+            yield return new WaitForSeconds (0.2f);
+        }
+
     }
 }
