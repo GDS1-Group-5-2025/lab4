@@ -1,19 +1,18 @@
 using UnityEngine;
-using System.Collections;
 
 public class EnemyShooting : BaseShooting
 {
     public float detectionRange = 10f;
     public float shootingOffsetRadius = 1f;
 
-    private Transform player;
+    private Transform _player;
 
     protected override void Start()
     {
         var playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
-            player = playerObject.transform;
+            _player = playerObject.transform;
         }
 
         base.Start();
@@ -25,14 +24,14 @@ public class EnemyShooting : BaseShooting
         base.Update();
 
         if (!canShoot) return;
-        if (_isReloading) return;
-        if (!player) return;
+        if (isReloading) return;
+        if (!_player) return;
 
-        var distance = Vector2.Distance(transform.position, player.position);
+        var distance = Vector2.Distance(transform.position, _player.position);
         if (distance <= detectionRange)
         {
             // AI logic to aim and shoot
-            var targetPos = (Vector2)player.position + Random.insideUnitCircle * shootingOffsetRadius;
+            var targetPos = (Vector2)_player.position + Random.insideUnitCircle * shootingOffsetRadius;
             var direction = (targetPos - (Vector2)transform.position).normalized;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             angle -= 90f;
