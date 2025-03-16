@@ -11,10 +11,16 @@ public class PlayerPowerup : MonoBehaviour
     public GameObject aimIndicator;
 
     private LineRenderer _lineRenderer;
+    private PowerupManager _powerupManager;
+
+    private void Awake()
+    {
+        _powerupManager = FindFirstObjectByType<PowerupManager>();
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
 
     private void Start()
     {
-        _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = 1;
         _lineRenderer.SetPosition(0, transform.position);
     }
@@ -27,11 +33,21 @@ public class PlayerPowerup : MonoBehaviour
     private void OnEnable()
     {
         aimIndicator.SetActive(false);
+        _lineRenderer.enabled = true;
     }
 
     private void OnDisable()
     {
         aimIndicator.SetActive(true);
+        _lineRenderer.enabled = false;
+    }
+
+    public void TakeDamage()
+    {
+        if (enabled)
+        {
+            _powerupManager.PowerupLost();
+        }
     }
 
     private void SimulateTrajectory(Vector3 startPos, Vector3 direction, int bouncesRemaining)

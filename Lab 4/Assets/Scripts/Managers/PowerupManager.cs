@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SearchService;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 
@@ -27,7 +28,8 @@ public class PowerupManager : MonoBehaviour
     public float maxSpawnInterval = 20f;
     public PlayerPowerup[] players;
 
-    private Rect _screenBounds;
+    [FormerlySerializedAs("_screenBounds")]
+    public Rect playableBounds;
 
     private int _activePowerupIndex = -1;
     private GameObject _powerupPickup;
@@ -40,18 +42,12 @@ public class PowerupManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(_screenBounds.width, _screenBounds.height, 1));
+        Gizmos.DrawWireCube(playableBounds.center, new Vector3(playableBounds.width, playableBounds.height, 1));
     }
 
     private void Start()
     {
         _timeUntilNextPowerupSpawn = Random.Range(minSpawnInterval, maxSpawnInterval);
-        _screenBounds = new Rect(
-            0,
-            0,
-            Camera.main.orthographicSize * Camera.main.aspect * 2,
-            Camera.main.orthographicSize * 2
-        );
     }
 
     private void Update()
@@ -81,6 +77,7 @@ public class PowerupManager : MonoBehaviour
         {
             // check scores
             var winningPlayer = ScoreManager.Instance.GetWinningPlayer();
+            Debug.Log("ChooseSide A");
             _currentPlayerTauntedIndex = winningPlayer switch
             {
                 0 => Random.Range(0, players.Length),
@@ -91,29 +88,32 @@ public class PowerupManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("ChooseSide B");
             _currentPlayerTauntedIndex = 0;
         }
     }
 
     private void SpawnPowerup()
     {
+        Debug.Log("SpawnPowerup " + _currentPlayerTauntedIndex);
         var player = players[_currentPlayerTauntedIndex];
 
-        // Players are always away from 0, either - something or + something. so we can use this to determine the side
-        var side = player.transform.position.x < 0 ? 1 : -1;
+        // Find out if the player is closer to the top or the bottom of the screen
+        var position = player.transform.position - new Vector3(playableBounds.center.x, playableBounds.center.y, 0);
 
-        // Now find out if the player is closer to the top or the bottom of the screen
-        var position = player.transform.position;
+        // Players are always away from playableBounds.center, either - something or + something. so we can use this to determine the side
+        var side = Mathf.Sign(position.x);
+
         // Choose position farthest from the player
-        var yMax = position.y < 0 ? _screenBounds.height / 2 : -(_screenBounds.height / 2);
+        var yMax = Mathf.Sign(position.y) * ((playableBounds.height / 2) + playableBounds.center.y);
 
         // Now we spawn the powerup
         var spawnPosition = new Vector3
         {
             // y 20% away from yMax towards the center
-            y = yMax - (yMax * 0.2f),
+            y = playableBounds.center.y + (yMax * 0.8f),
             // x position will be just off the screen, on the side of the player
-            x = side * (_screenBounds.width / 2 + 1),
+            x = playableBounds.center.x + (side * (playableBounds.width / 2 + 1)),
         };
 
         _powerupPickup = Instantiate(powerupPrefab, spawnPosition, Quaternion.identity);
@@ -127,12 +127,14 @@ public class PowerupManager : MonoBehaviour
         _timeUntilNextPowerupSpawn = float.MaxValue;
         // powerup picked up by player
         _activePowerupIndex = _currentPlayerTauntedIndex;
+        Debug.Log("PowerupPickedUp A " + _activePowerupIndex);
         // apply powerup effect
         players[_activePowerupIndex].enabled = true;
         // remove powerup from scene
         Destroy(_powerupPickup);
         // clear variables
         _powerupPickup = null;
+        Debug.Log("PowerupPickedUp B");
         _currentPlayerTauntedIndex = -1;
     }
 
@@ -158,6 +160,7 @@ public class PowerupManager : MonoBehaviour
         // remove powerup from scene
         Destroy(_powerupPickup);
         // switch sides
+        Debug.Log("PowerupExpired");
         _currentPlayerTauntedIndex = _currentPlayerTauntedIndex == 0 ? 1 : 0;
         // clear variables
         _powerupPickup = null;
@@ -173,6 +176,7 @@ public class PowerupManager : MonoBehaviour
         _activePowerupIndex = -1;
         Destroy(_powerupPickup);
         _powerupPickup = null;
+        Debug.Log("Reset");
         _currentPlayerTauntedIndex = -1;
         _timeSinceLastPowerup = 0f;
         _initialPowerupSpawned = false;
