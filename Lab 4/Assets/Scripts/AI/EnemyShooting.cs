@@ -26,7 +26,7 @@ public class EnemyShooting : BaseShooting
 
         if (!canShoot) return;
         if (_isReloading) return;
-        if (player == null) return;
+        if (!player) return;
 
         var distance = Vector2.Distance(transform.position, player.position);
         if (distance <= detectionRange)
