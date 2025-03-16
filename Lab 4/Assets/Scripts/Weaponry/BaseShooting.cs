@@ -15,7 +15,7 @@ public abstract class BaseShooting : MonoBehaviour
     public AudioClip shootSound;
     public AudioClip reloadSound;
     public AudioClip emptyGunSound;
-    public GameObject loadingImage;    
+    public GameObject loadingImage;
 
     protected AudioSource _audioSource;
     protected int _currentBullets;
@@ -28,9 +28,9 @@ public abstract class BaseShooting : MonoBehaviour
     protected virtual void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-
         bulletManager = FindFirstObjectByType<BulletManager>();
 
+        // Initialize bullets and hide loading image
         _currentBullets = bulletCount;
         if (loadingImage != null)
             loadingImage.SetActive(false);
@@ -38,23 +38,25 @@ public abstract class BaseShooting : MonoBehaviour
 
     protected virtual void Update()
     {
-        // If reloading, count reload time
+        // Handle reload timing
         if (_isReloading)
         {
             _timeSinceReloadStart += Time.deltaTime;
+
+            // If reload timer has finished, finalize reload
             if (_timeSinceReloadStart >= reloadTime)
             {
                 FinishReload();
             }
         }
 
-        // Track time since last shot
+        // Track time since last shot for fire-rate limiting
         _timeSinceLastShot += Time.deltaTime;
     }
 
-    // Attempt to shoot once.  Children call this when the AI or Player has decided to shoot.
     protected void AttemptShoot(Vector2 spawnPos, Quaternion spawnRotation)
     {
+        // Don’t shoot if already reloading
         if (_isReloading)
         {
             if (emptyGunSound != null)
@@ -62,17 +64,17 @@ public abstract class BaseShooting : MonoBehaviour
             return;
         }
 
-        // Check rate of fire
+        // Enforce fire rate
         if (_timeSinceLastShot < 1f / fireRate) return;
 
-        // Fire bullet
+        // If we have bullets left, shoot
         if (_currentBullets > 0)
         {
             ShootImplementation(spawnPos, spawnRotation);
             _currentBullets--;
             _timeSinceLastShot = 0f;
 
-            // If out of bullets, reload
+            // If out of bullets now, start reloading
             if (_currentBullets <= 0)
             {
                 StartReload();
@@ -85,7 +87,6 @@ public abstract class BaseShooting : MonoBehaviour
         }
     }
 
-    // Spawns the bullet via the bullet manager.
     protected virtual void ShootImplementation(Vector2 spawnPos, Quaternion spawnRotation)
     {
         if (bulletManager != null)
@@ -94,25 +95,22 @@ public abstract class BaseShooting : MonoBehaviour
         }
 
         if (shootSound != null)
+        {
+            // Stop any currently playing sound before playing the new one
+            _audioSource.Stop();
             _audioSource.PlayOneShot(shootSound);
-    }
-
-    private IEnumerator StopShootingTemporarily(float duration)
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(duration);
-        canShoot = true;
+        }
     }
 
     protected virtual void OnEnable()
     {
-        // Subscribe to any player’s death
+        // Example: subscribe to external events if needed
         PlayerHealth.OnAnyPlayerDied += HandleAnyPlayerDied;
     }
 
     protected virtual void OnDisable()
     {
-        // Unsubscribe when disabled/destroyed
+        // Unsubscribe from events
         PlayerHealth.OnAnyPlayerDied -= HandleAnyPlayerDied;
     }
 
@@ -129,11 +127,12 @@ public abstract class BaseShooting : MonoBehaviour
 
         _isReloading = true;
         _timeSinceReloadStart = 0f;
+
         if (loadingImage != null)
             loadingImage.SetActive(true);
     }
 
-    // Finishes reload process
+    // Called when reload time has elapsed
     protected virtual void FinishReload()
     {
         _isReloading = false;
@@ -145,5 +144,12 @@ public abstract class BaseShooting : MonoBehaviour
 
         if (loadingImage != null)
             loadingImage.SetActive(false);
+    }
+
+    private IEnumerator StopShootingTemporarily(float duration)
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(duration);
+        canShoot = true;
     }
 }
