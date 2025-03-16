@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: f306b164a61d96a4caff697cd31e4edd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - shootSound: {instanceID: 0}
+  - reloadSound: {instanceID: 0}
+  - emptyGunSound: {instanceID: 0}
+  - loadingImage: {instanceID: 0}
+  - radialProgressBar: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
