@@ -28,4 +28,9 @@ public class BulletMovement : MonoBehaviour
         if(other.gameObject.CompareTag("Wall") && !hasHitWall){ hasHitWall = true; }
         else{ Destroy(this.gameObject); }
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(this.gameObject);
+    }
 }
