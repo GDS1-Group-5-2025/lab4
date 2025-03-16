@@ -40,6 +40,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Wall
+    uniqueID: 2355632695
+    locked: 0
   - name: Ground
     uniqueID: 3281727087
     locked: 0

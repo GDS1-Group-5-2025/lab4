@@ -1,19 +1,18 @@
 using UnityEngine;
-using System.Collections;
 
 public class EnemyShooting : BaseShooting
 {
     public float detectionRange = 10f;
     public float shootingOffsetRadius = 1f;
 
-    private Transform player;
+    private Transform _player;
 
     protected override void Start()
     {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        var playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
-            player = playerObject.transform;
+            _player = playerObject.transform;
         }
 
         base.Start();
@@ -25,19 +24,20 @@ public class EnemyShooting : BaseShooting
         base.Update();
 
         if (!canShoot) return;
-        if (player == null) return;
+        if (isReloading) return;
+        if (!_player) return;
 
-        float distance = Vector2.Distance(transform.position, player.position);
+        var distance = Vector2.Distance(transform.position, _player.position);
         if (distance <= detectionRange)
         {
             // AI logic to aim and shoot
-            Vector2 targetPos = (Vector2)player.position + Random.insideUnitCircle * shootingOffsetRadius;
-            Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var targetPos = (Vector2)_player.position + Random.insideUnitCircle * shootingOffsetRadius;
+            var direction = (targetPos - (Vector2)transform.position).normalized;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             angle -= 90f;
 
             // Attempt to shoot
-            Vector2 spawnPos = (Vector2)transform.position + direction * 1f;
+            var spawnPos = (Vector2)transform.position + direction * 1f;
             AttemptShoot(spawnPos, Quaternion.Euler(0f, 0f, angle));
         }
     }
