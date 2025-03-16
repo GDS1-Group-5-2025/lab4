@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -12,10 +14,19 @@ public class ScoreManager : MonoBehaviour
     private int winningPlayer;
 
     public event Action<int> OnGameEnded;
+    [SerializeField] private Text player1ScoreText;
+    [SerializeField] private Text player2ScoreText;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip winSound;
+    [SerializeField] private AudioClip loseSound;
+
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject loseScreen;
 
     private void Awake()
     {
-        // If there is already an instance and it’s not this one, destroy this duplicate.
+        // If there is already an instance and it's not this one, destroy this duplicate.
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -24,6 +35,29 @@ public class ScoreManager : MonoBehaviour
 
         // Otherwise, set this as the active instance
         Instance = this;
+
+        UpdateScoreUI();
+        HideWinLoseScreens();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (player1ScoreText != null)
+        {
+            player1ScoreText.text = "Player 1: " + player1Score.ToString();
+        }
+        if (player2ScoreText != null)
+        {
+            player2ScoreText.text = "Player 2: " + player2Score.ToString();
+        }
+    }
+
+    private void UpdateScoreUITarget()
+    {
+        if (player1ScoreText != null)
+        {
+            player1ScoreText.text = "Score: " + player1Score.ToString();
+        }
     }
 
     public void IncrementScoreForOppositionOf(int player)
@@ -37,8 +71,14 @@ public class ScoreManager : MonoBehaviour
         {
             player1Score++;
         }
-
+        UpdateScoreUI();
         CheckWinConditionFirstToReachScore();
+    }
+
+    public void IncrementScoreForTarget()
+    {
+        player1Score++;
+        UpdateScoreUITarget();
     }
 
     private void CheckWinConditionFirstToReachScore()
@@ -47,12 +87,14 @@ public class ScoreManager : MonoBehaviour
         {
             Debug.Log("Player 1 wins!");
             winningPlayer = 1;
+            ShowEndScreen(winScreen, winSound);
             EndGame();
         }
         else if (player2Score == scoreToWin)
         {
             Debug.Log("Player 2 wins!");
             winningPlayer = 2;
+            ShowEndScreen(loseScreen, loseSound);
             EndGame();
         }
     }
@@ -63,11 +105,13 @@ public class ScoreManager : MonoBehaviour
         if (player1Score > player2Score)
         {
             winningPlayer = 1;
+            ShowEndScreen(winScreen, winSound);
             Debug.Log("Player 1 wins!");
         }
         else if (player2Score > player1Score)
         {
             winningPlayer = 2;
+            ShowEndScreen(loseScreen, loseSound);
             Debug.Log("Player 2 wins!");
         }
         else
@@ -77,17 +121,62 @@ public class ScoreManager : MonoBehaviour
         }
         EndGame();
     }
+    private void ShowEndScreen(GameObject screen, AudioClip sound)
+    {
+        HideWinLoseScreens();
+        if (screen != null)
+        {
+            screen.SetActive(true);
+        }
+        PlaySound(sound);
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+    }
+
+    private void HideWinLoseScreens()
+    {
+        if (winScreen != null) winScreen.SetActive(false);
+        if (loseScreen != null) loseScreen.SetActive(false);
+    }
 
     private void ResetScores()
     {
         player1Score = 0;
         player2Score = 0;
         winningPlayer = 0;
+        HideWinLoseScreens();
     }
 
     private void EndGame()
     {
         OnGameEnded?.Invoke(winningPlayer);
+
+        if (winningPlayer == 1)
+        {
+            string currentScene = SceneManager.GetActiveScene().name;
+
+            if (currentScene == "PvE")
+            {
+                Debug.Log("Level 2");
+                SceneManager.LoadScene("PvE2");
+            }
+            else if (currentScene == "PvE2")
+            {
+                Debug.Log("Level 3");
+                SceneManager.LoadScene("PvE3");
+            }
+        }
+
         ResetScores();
+        UpdateScoreUI();
+
+
     }
 }

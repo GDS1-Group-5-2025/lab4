@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bullet
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -39,8 +40,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Ground
+    uniqueID: 3281727087
+    locked: 0
+  - name: Small obstacle
+    uniqueID: 250296701
+    locked: 0
+  - name: Large obstacle
+    uniqueID: 1373265665
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 3061779051
+    locked: 0
+  - name: Bullets
+    uniqueID: 2938079031
     locked: 0
   m_RenderingLayers:
   - Default

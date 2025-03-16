@@ -6,8 +6,29 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menus/StartMenu.unity
+    guid: 61c4a92ca7e6c2e4599b97a14cad53a9
+  - enabled: 1
+    path: Assets/Scenes/Levels/PvP.unity
+    guid: 1dfe15ba9fede554c98581e0b190593e
+  - enabled: 1
+    path: Assets/Scenes/Menus/SinglePlayerSelect.unity
+    guid: 1ceae0467bb63b24d95e3ff74315650f
+  - enabled: 1
     path: Assets/Scenes/Levels/PvE.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Levels/PvT.unity
+    guid: 625bee82954ee1b4e8939f9f3f296135
+  - enabled: 1
+    path: Assets/Scenes/Menus/BotLevelSelect.unity
+    guid: f572bbd74607f85419266a9c478cc645
+  - enabled: 1
+    path: Assets/Scenes/Levels/PvE2.unity
+    guid: e91847816d0e2b040bd4ef5a9e6de9b1
+  - enabled: 1
+    path: Assets/Scenes/Levels/PvE3.unity
+    guid: ae3f08d60cd069d4480836fa71e0eccd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 239480f3f18bdf749bc8f81615f73ace, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
