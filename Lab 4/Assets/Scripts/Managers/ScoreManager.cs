@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -160,8 +161,8 @@ public class ScoreManager : MonoBehaviour
 
         if (winningPlayer == 1)
         {
+            // Level progression logic remains the same.
             string currentScene = SceneManager.GetActiveScene().name;
-
             if (currentScene == "PvE")
             {
                 Debug.Log("Level 2");
@@ -173,10 +174,19 @@ public class ScoreManager : MonoBehaviour
                 SceneManager.LoadScene("PvE3");
             }
         }
+        else
+        {
+            // For a loss, delay the reset so the UI can stay visible.
+            StartCoroutine(DelayedReset());
+        }
+    }
 
+    private IEnumerator DelayedReset()
+    {
+        // Wait for 3 seconds before hiding the screen and resetting scores.
+        yield return new WaitForSeconds(3f);
         ResetScores();
         UpdateScoreUI();
-
-
     }
+
 }
