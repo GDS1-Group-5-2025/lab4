@@ -130,19 +130,17 @@ public class ScoreManager : MonoBehaviour
     private void ShowEndScreen(GameObject screen, AudioClip sound)
     {
         HideWinLoseScreens();
-        if (multiPlayerLevel)
+        if (winningPlayer == 0)
         {
-            if (winningPlayer == 0)
-            {
-                winText.text = "DRAW!";
-            }
-            else
-            {
-                winText.text = "PLAYER " + winningPlayer + " WINS!";
-            }
+            winText.text = "DRAW!";
             winScreen.SetActive(true);
         }
-        if (screen != null)
+        else if (multiPlayerLevel)
+        {
+            winText.text = "PLAYER " + winningPlayer + " WINS!";
+            winScreen.SetActive(true);
+        }
+        else if (screen != null)
         {
             screen.SetActive(true);
         }

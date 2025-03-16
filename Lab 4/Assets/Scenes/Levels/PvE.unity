@@ -566,6 +566,8 @@ MonoBehaviour:
   loseSound: {fileID: 8300000, guid: fe40b390e86254ce6ae6a61337d53434, type: 3}
   winScreen: {fileID: 1432392622}
   loseScreen: {fileID: 707711632}
+  multiPlayerLevel: 0
+  winText: {fileID: 1103948546}
 --- !u!114 &426324414
 MonoBehaviour:
   m_ObjectHideFlags: 0
