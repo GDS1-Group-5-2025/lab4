@@ -8,7 +8,6 @@ public class WagonMovement : MonoBehaviour
     private float animationChangeRate;
     [SerializeField] private int currSprite;
     [SerializeField] private Sprite[] sprites;
-    private bool entering = true;
 
     void Start(){
         startPos = this.transform.position;
