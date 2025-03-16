@@ -3202,6 +3202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootingEnabled: 1
   bulletPrefab: {fileID: 3217884554533520243, guid: 865b3be940ff5ea459256a992807513e, type: 3}
+  _audioSource: {fileID: 1215558819}
+  _hitSound: {fileID: 8300000, guid: 227aeb7b6d1e74843b49618c8c342abe, type: 3}
 --- !u!4 &1215558824
 Transform:
   m_ObjectHideFlags: 0
@@ -4063,6 +4065,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819128086}
   m_CullTransparentMesh: 1
+--- !u!114 &1856716001 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5240135001543240379, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
+  m_PrefabInstance: {fileID: 958752705}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b470ec2da61fb5745ae199c270d500f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1903563931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4120,17 +4133,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01f0215cdf629a44c90dbdc8d89e7225, type: 3}
---- !u!114 &1856716001 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5240135001543240379, guid: eb31a2861b8156a41a36a4217fe1d07c, type: 3}
-  m_PrefabInstance: {fileID: 958752705}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b470ec2da61fb5745ae199c270d500f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1944836592
 PrefabInstance:
   m_ObjectHideFlags: 0
