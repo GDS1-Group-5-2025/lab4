@@ -416,7 +416,7 @@ MonoBehaviour:
   playerNumber: 1
   startingLives: 2
   weapon: {fileID: 1197917127193174309}
-  targetMode: 0
+  targetMode: 1
   _currentLives: 0
   invincibilityDuration: 2
 --- !u!114 &8772702121365958500
