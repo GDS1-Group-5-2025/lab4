@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
-    private bool hasHitWall = false;
+    [SerializeField] private float power = 10f;
+
+    private Camera _camera;
     private Rigidbody2D _rb;
-    public float power = 10f;
+
+    private bool _hasHitWall;
 
     private void Start()
     {
+        _camera = Camera.main;
         _rb = GetComponent<Rigidbody2D>();
         // Initial force
         _rb.AddForce(transform.up * power, ForceMode2D.Impulse);
@@ -22,10 +26,17 @@ public class BulletMovement : MonoBehaviour
 
         // Apply rotation
         transform.rotation = Quaternion.Euler(0, 0, angle-90);
+
+        // If bullet is out of camera view, destroy it
+        var viewPos = _camera.WorldToViewportPoint(transform.position);
+        if (viewPos.x < 0 || viewPos.x > 1 || viewPos.y < 0 || viewPos.y > 1)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if(other.gameObject.CompareTag("Wall") && !hasHitWall){ hasHitWall = true; }
-        else{ Destroy(this.gameObject); }
+        if(other.gameObject.CompareTag("Wall") && !_hasHitWall){ _hasHitWall = true; }
+        else{ Destroy(gameObject); }
     }
 }

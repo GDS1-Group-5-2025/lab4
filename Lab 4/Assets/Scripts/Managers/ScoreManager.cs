@@ -9,11 +9,11 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
 
-    [SerializeField] private int player1Score = 0;
-    [SerializeField] private int player2Score = 0;
+    [SerializeField] private int player1Score;
+    [SerializeField] private int player2Score;
     [SerializeField] private int scoreToWin = 7;
 
-    private int winningPlayer;
+    private int _winningPlayer;
 
     public event Action<int> OnGameEnded;
     [SerializeField] private Text player1ScoreText;
@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject winScreen;
     [SerializeField] private GameObject loseScreen;
 
-    [SerializeField] private bool multiPlayerLevel = false;
+    [SerializeField] private bool multiPlayerLevel;
     [SerializeField] private TextMeshProUGUI winText;
 
     private void Awake()
@@ -47,21 +47,21 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreUI()
     {
-        if (player1ScoreText != null)
+        if (player1ScoreText)
         {
-            player1ScoreText.text = "Player 1: " + player1Score.ToString();
+            player1ScoreText.text = "Player 1: " + player1Score;
         }
-        if (player2ScoreText != null)
+        if (player2ScoreText)
         {
-            player2ScoreText.text = "Player 2: " + player2Score.ToString();
+            player2ScoreText.text = "Player 2: " + player2Score;
         }
     }
 
     private void UpdateScoreUITarget()
     {
-        if (player1ScoreText != null)
+        if (player1ScoreText)
         {
-            player1ScoreText.text = "Score: " + player1Score.ToString();
+            player1ScoreText.text = "Score: " + player1Score;
         }
     }
 
@@ -91,14 +91,14 @@ public class ScoreManager : MonoBehaviour
         if (player1Score == scoreToWin)
         {
             Debug.Log("Player 1 wins!");
-            winningPlayer = 1;
+            _winningPlayer = 1;
             ShowEndScreen(winScreen, winSound);
             EndGame();
         }
         else if (player2Score == scoreToWin)
         {
             Debug.Log("Player 2 wins!");
-            winningPlayer = 2;
+            _winningPlayer = 2;
             ShowEndScreen(loseScreen, loseSound);
             EndGame();
         }
@@ -108,17 +108,17 @@ public class ScoreManager : MonoBehaviour
     {
         if (player1Score > player2Score)
         {
-            winningPlayer = 1;
+            _winningPlayer = 1;
         }
         else if (player2Score > player1Score)
         {
-            winningPlayer = 2;
+            _winningPlayer = 2;
         }
         else
         {
-            winningPlayer = 0;
+            _winningPlayer = 0;
         }
-        return winningPlayer;
+        return _winningPlayer;
     }
 
     //Called when time runs out
@@ -126,19 +126,19 @@ public class ScoreManager : MonoBehaviour
     {
         if (player1Score > player2Score)
         {
-            winningPlayer = 1;
+            _winningPlayer = 1;
             ShowEndScreen(winScreen, winSound);
             Debug.Log("Player 1 wins!");
         }
         else if (player2Score > player1Score)
         {
-            winningPlayer = 2;
+            _winningPlayer = 2;
             ShowEndScreen(loseScreen, loseSound);
             Debug.Log("Player 2 wins!");
         }
         else
         {
-            winningPlayer = 0;
+            _winningPlayer = 0;
             ShowEndScreen(loseScreen, loseSound);
             Debug.Log("It's a tie!");
         }
@@ -147,17 +147,17 @@ public class ScoreManager : MonoBehaviour
     private void ShowEndScreen(GameObject screen, AudioClip sound)
     {
         HideWinLoseScreens();
-        if (winningPlayer == 0)
+        if (_winningPlayer == 0)
         {
             winText.text = "DRAW!";
             winScreen.SetActive(true);
         }
         else if (multiPlayerLevel)
         {
-            winText.text = "PLAYER " + winningPlayer + " WINS!";
+            winText.text = "PLAYER " + _winningPlayer + " WINS!";
             winScreen.SetActive(true);
         }
-        else if (screen != null)
+        else if (screen )
         {
             screen.SetActive(true);
         }
@@ -166,7 +166,7 @@ public class ScoreManager : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
-        if (audioSource != null && clip != null)
+        if (audioSource  && clip )
         {
             audioSource.clip = clip;
             audioSource.Play();
@@ -175,35 +175,36 @@ public class ScoreManager : MonoBehaviour
 
     private void HideWinLoseScreens()
     {
-        if (winScreen != null) winScreen.SetActive(false);
-        if (loseScreen != null) loseScreen.SetActive(false);
+        if (winScreen ) winScreen.SetActive(false);
+        if (loseScreen ) loseScreen.SetActive(false);
     }
 
     private void ResetScores()
     {
         player1Score = 0;
         player2Score = 0;
-        winningPlayer = 0;
+        _winningPlayer = 0;
         HideWinLoseScreens();
     }
 
     private void EndGame()
     {
-        OnGameEnded?.Invoke(winningPlayer);
+        OnGameEnded?.Invoke(_winningPlayer);
 
-        if (winningPlayer == 1)
+        if (_winningPlayer == 1)
         {
             // Level progression logic remains the same.
-            string currentScene = SceneManager.GetActiveScene().name;
-            if (currentScene == "PvE")
+            var currentScene = SceneManager.GetActiveScene().name;
+            switch (currentScene)
             {
-                Debug.Log("Level 2");
-                SceneManager.LoadScene("PvE2");
-            }
-            else if (currentScene == "PvE2")
-            {
-                Debug.Log("Level 3");
-                SceneManager.LoadScene("PvE3");
+                case "PvE":
+                    Debug.Log("Level 2");
+                    SceneManager.LoadScene("PvE2");
+                    break;
+                case "PvE2":
+                    Debug.Log("Level 3");
+                    SceneManager.LoadScene("PvE3");
+                    break;
             }
         }
         else

@@ -6,12 +6,12 @@ public class BiDirectionalDestruction : MonoBehaviour
     [SerializeField] private BoxCollider2D bC;
     [SerializeField] private AudioSource aS;
     [SerializeField] private int lBound, uBound;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Start()
     {
         lBound = 0;
         uBound = sR.Length-1;
-        foreach(SpriteRenderer i in sR){
+        foreach(var i in sR){
             if(!i.enabled){ i.enabled = true; }
         }
     }
@@ -19,7 +19,7 @@ public class BiDirectionalDestruction : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col) {
         if(col.gameObject.CompareTag("Bullet")){
             aS.Play();
-            if(col.transform.position.x > this.transform.position.x){   //From the right
+            if(col.transform.position.x > transform.position.x){   //From the right
                 sR[uBound].enabled = false;
                 uBound -= 1;
                 bC.size = new Vector2(bC.size.x-0.2f, bC.size.y);
@@ -39,6 +39,6 @@ public class BiDirectionalDestruction : MonoBehaviour
     }
 
     private void DestroyObj(){
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

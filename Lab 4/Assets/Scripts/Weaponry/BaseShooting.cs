@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using System.Collections;
 
@@ -17,21 +16,21 @@ public abstract class BaseShooting : MonoBehaviour
     public AudioClip emptyGunSound;
     public GameObject loadingImage;
 
-    protected AudioSource _audioSource;
-    protected int _currentBullets;
-    protected float _timeSinceLastShot;
-    protected float _timeSinceReloadStart;
-    protected bool _isReloading;
+    protected AudioSource audioSource;
+    protected int currentBullets;
+    protected float timeSinceLastShot;
+    protected float timeSinceReloadStart;
+    protected bool isReloading;
 
     public bool canShoot = true;
 
     protected virtual void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         bulletManager = FindFirstObjectByType<BulletManager>();
 
         // Initialize bullets and hide loading image
-        _currentBullets = bulletCount;
+        currentBullets = bulletCount;
         if (loadingImage != null)
             loadingImage.SetActive(false);
     }
@@ -39,43 +38,43 @@ public abstract class BaseShooting : MonoBehaviour
     protected virtual void Update()
     {
         // Handle reload timing
-        if (_isReloading)
+        if (isReloading)
         {
-            _timeSinceReloadStart += Time.deltaTime;
+            timeSinceReloadStart += Time.deltaTime;
 
             // If reload timer has finished, finalize reload
-            if (_timeSinceReloadStart >= reloadTime)
+            if (timeSinceReloadStart >= reloadTime)
             {
                 FinishReload();
             }
         }
 
         // Track time since last shot for fire-rate limiting
-        _timeSinceLastShot += Time.deltaTime;
+        timeSinceLastShot += Time.deltaTime;
     }
 
     protected void AttemptShoot(Vector2 spawnPos, Quaternion spawnRotation)
     {
         // Don’t shoot if already reloading
-        if (_isReloading)
+        if (isReloading)
         {
             if (emptyGunSound != null)
-                _audioSource.PlayOneShot(emptyGunSound);
+                audioSource.PlayOneShot(emptyGunSound);
             return;
         }
 
         // Enforce fire rate
-        if (_timeSinceLastShot < 1f / fireRate) return;
+        if (timeSinceLastShot < 1f / fireRate) return;
 
         // If we have bullets left, shoot
-        if (_currentBullets > 0)
+        if (currentBullets > 0)
         {
             ShootImplementation(spawnPos, spawnRotation);
-            _currentBullets--;
-            _timeSinceLastShot = 0f;
+            currentBullets--;
+            timeSinceLastShot = 0f;
 
             // If out of bullets now, start reloading
-            if (_currentBullets <= 0)
+            if (currentBullets <= 0)
             {
                 StartReload();
             }
@@ -89,16 +88,16 @@ public abstract class BaseShooting : MonoBehaviour
 
     protected virtual void ShootImplementation(Vector2 spawnPos, Quaternion spawnRotation)
     {
-        if (bulletManager != null)
+        if (bulletManager)
         {
             bulletManager.Shoot(spawnPos, spawnRotation);
         }
 
-        if (shootSound != null)
+        if (shootSound)
         {
             // Stop any currently playing sound before playing the new one
-            _audioSource.Stop();
-            _audioSource.PlayOneShot(shootSound);
+            audioSource.Stop();
+            audioSource.PlayOneShot(shootSound);
         }
     }
 
@@ -123,26 +122,26 @@ public abstract class BaseShooting : MonoBehaviour
     // Begins reload process
     protected virtual void StartReload()
     {
-        if (_isReloading) return;
+        if (isReloading) return;
 
-        _isReloading = true;
-        _timeSinceReloadStart = 0f;
+        isReloading = true;
+        timeSinceReloadStart = 0f;
 
-        if (loadingImage != null)
+        if (loadingImage)
             loadingImage.SetActive(true);
     }
 
     // Called when reload time has elapsed
     protected virtual void FinishReload()
     {
-        _isReloading = false;
-        _currentBullets = bulletCount;
-        _timeSinceReloadStart = 0f;
+        isReloading = false;
+        currentBullets = bulletCount;
+        timeSinceReloadStart = 0f;
 
-        if (reloadSound != null)
-            _audioSource.PlayOneShot(reloadSound);
+        if (reloadSound)
+            audioSource.PlayOneShot(reloadSound);
 
-        if (loadingImage != null)
+        if (loadingImage)
             loadingImage.SetActive(false);
     }
 
