@@ -8,8 +8,6 @@ public class BulletMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private BulletManager _bulletManager;
 
-    public float power = 10f;
-
     private bool _hasHitWall;
 
     private void Start()
@@ -49,7 +47,7 @@ public class BulletMovement : MonoBehaviour
         {
             _bulletManager.PlayHitSound();
         }
-        if (other.gameObject.CompareTag("Wall") && !hasHitWall){ hasHitWall = true; }
+        if (other.gameObject.CompareTag("Wall") && !_hasHitWall){ _hasHitWall = true; }
         else{ Destroy(this.gameObject); }
     }
 }

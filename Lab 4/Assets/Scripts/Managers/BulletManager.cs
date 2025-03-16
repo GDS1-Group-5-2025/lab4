@@ -7,7 +7,6 @@ public class BulletManager : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
 
     public bool shootingEnabled = true;
-    public GameObject bulletPrefab;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _hitSound;
 
