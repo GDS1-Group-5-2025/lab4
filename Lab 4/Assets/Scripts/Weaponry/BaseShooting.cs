@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(AudioSource))]
 public abstract class BaseShooting : MonoBehaviour
 {
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
     [Header("Shooting Settings")]
     public int bulletCount = 6;
     public float fireRate = 1f;
@@ -24,10 +25,14 @@ public abstract class BaseShooting : MonoBehaviour
 
     public bool canShoot = true;
 
+    protected Animator animator;
+
     protected virtual void Start()
     {
         audioSource = GetComponent<AudioSource>();
         bulletManager = FindFirstObjectByType<BulletManager>();
+
+        animator = GetComponentInParent<Animator>();
 
         // Initialize bullets and hide loading image
         currentBullets = bulletCount;
@@ -58,7 +63,7 @@ public abstract class BaseShooting : MonoBehaviour
         // Don’t shoot if already reloading
         if (isReloading)
         {
-            if (emptyGunSound != null)
+            if (emptyGunSound )
                 audioSource.PlayOneShot(emptyGunSound);
             return;
         }
@@ -69,6 +74,12 @@ public abstract class BaseShooting : MonoBehaviour
         // If we have bullets left, shoot
         if (currentBullets > 0)
         {
+            // Animation trigger
+            if (animator  && !isReloading)
+            {
+                animator.SetTrigger(Shoot);
+            }
+
             ShootImplementation(spawnPos, spawnRotation);
             currentBullets--;
             timeSinceLastShot = 0f;
