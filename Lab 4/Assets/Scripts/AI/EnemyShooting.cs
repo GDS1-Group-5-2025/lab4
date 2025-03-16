@@ -25,6 +25,7 @@ public class EnemyShooting : BaseShooting
         base.Update();
 
         if (!canShoot) return;
+        if (_isReloading) return;
         if (player == null) return;
 
         float distance = Vector2.Distance(transform.position, player.position);

@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f3731a7fef94333b074bca1f0efdf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletCount: 6
+  bulletCount: 4
   fireRate: 1
   reloadTime: 2
   bulletManager: {fileID: 0}
