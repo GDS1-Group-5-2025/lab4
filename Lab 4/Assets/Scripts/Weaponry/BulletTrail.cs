@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class BulletTrail : MonoBehaviour
 {
@@ -20,7 +18,7 @@ public class BulletTrail : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Increment elapsed time
         _elapsedTime += Time.deltaTime;

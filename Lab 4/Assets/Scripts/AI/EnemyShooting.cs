@@ -10,7 +10,7 @@ public class EnemyShooting : BaseShooting
 
     protected override void Start()
     {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        var playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
             player = playerObject.transform;
@@ -26,19 +26,19 @@ public class EnemyShooting : BaseShooting
 
         if (!canShoot) return;
         if (_isReloading) return;
-        if (player == null) return;
+        if (!player) return;
 
-        float distance = Vector2.Distance(transform.position, player.position);
+        var distance = Vector2.Distance(transform.position, player.position);
         if (distance <= detectionRange)
         {
             // AI logic to aim and shoot
-            Vector2 targetPos = (Vector2)player.position + Random.insideUnitCircle * shootingOffsetRadius;
-            Vector2 direction = (targetPos - (Vector2)transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var targetPos = (Vector2)player.position + Random.insideUnitCircle * shootingOffsetRadius;
+            var direction = (targetPos - (Vector2)transform.position).normalized;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             angle -= 90f;
 
             // Attempt to shoot
-            Vector2 spawnPos = (Vector2)transform.position + direction * 1f;
+            var spawnPos = (Vector2)transform.position + direction * 1f;
             AttemptShoot(spawnPos, Quaternion.Euler(0f, 0f, angle));
         }
     }
