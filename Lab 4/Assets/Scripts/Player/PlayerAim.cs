@@ -6,6 +6,8 @@ public class PlayerAim : MonoBehaviour
     [Header("Aim Settings")]
     public float speed;
     public bool invertAim;
+    [Range(0, 90)]
+    public float range = 80;
 
     private float _aimInput;
     private float _currentAimAngle;
@@ -31,8 +33,8 @@ public class PlayerAim : MonoBehaviour
         // Update aim angle
         _currentAimAngle += _aimInput * (invertAim ? 1 : -1) * speed * Time.deltaTime;
 
-        // Limit angle to 0-180
-        _currentAimAngle = Mathf.Clamp(_currentAimAngle, 0, 180);
+        // Limit angle
+        _currentAimAngle = Mathf.Clamp(_currentAimAngle, 90 - range, 90 + range);
 
         // Rotate go to aim angle
         transform.rotation = Quaternion.Euler(0, 0, _currentAimAngle * (invertAim ? -1 : 1));

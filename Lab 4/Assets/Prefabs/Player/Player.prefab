@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   invertAim: 0
+  range: 80
 --- !u!114 &1772345848906088485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,8 +420,7 @@ MonoBehaviour:
   startingLives: 2
   weapon: {fileID: 1197917127193174309}
   targetMode: 0
-  _currentLives: 0
-  invincibilityDuration: 2
+  currentLives: 0
 --- !u!114 &8772702121365958500
 MonoBehaviour:
   m_ObjectHideFlags: 0
