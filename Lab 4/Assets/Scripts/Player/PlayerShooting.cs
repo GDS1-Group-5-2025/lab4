@@ -4,14 +4,10 @@ using UnityEngine.UI;
 
 public class PlayerShooting : BaseShooting
 {
-    private static readonly int Shoot1 = Animator.StringToHash("Shoot");
     public Image radialProgressBar;
 
     private PlayerInput _playerInput;
     private InputActionMap _playerActionMap;
-    private Animator _animator;
-
-    // We don�t need a separate _bullets here because BaseShooting already uses _currentBullets
     private bool _shootingDisabled;
 
     protected override void Start()
@@ -20,8 +16,6 @@ public class PlayerShooting : BaseShooting
 
         _playerInput = GetComponentInParent<PlayerInput>();
         _playerActionMap = _playerInput.currentActionMap;
-
-        _animator = GetComponentInParent<Animator>();
 
         // Initialize progress bar
         if (radialProgressBar != null)
@@ -32,7 +26,6 @@ public class PlayerShooting : BaseShooting
 
     protected override void Update()
     {
-        // Always call base.Update() so reloading and fire-rate logic work properly
         base.Update();
 
         // Update radial progress bar if reloading
@@ -69,7 +62,7 @@ public class PlayerShooting : BaseShooting
 
     public void Shoot(InputAction.CallbackContext ctx)
     {
-        if (!canShoot || !ctx.performed) return;
+        if (!ctx.performed) return;
 
         if (_shootingDisabled)
         {
@@ -83,12 +76,6 @@ public class PlayerShooting : BaseShooting
             if (emptyGunSound != null)
                 audioSource.PlayOneShot(emptyGunSound);
             return;
-        }
-
-        // Animate shoot
-        if (_animator != null && !isReloading)
-        {
-            _animator.SetTrigger(Shoot1);
         }
 
         // Attempt to fire using base logic
